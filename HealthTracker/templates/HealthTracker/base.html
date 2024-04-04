@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include any CSS files here -->
+</head>
+<body>
+
+<!-- Toolbar -->
+<div class="toolbar">
+    <ul>
+        <li><a href="{% url 'login' %}">Home</a></li>
+        <li><a href="{% url 'login' %}">About</a></li>
+        <!-- Add more toolbar items as needed -->
+    </ul>
+</div>
+
+<div class="content">
+    {% block content %}
+    {% endblock %}
+</div>

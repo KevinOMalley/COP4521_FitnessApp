@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Tracking App</title>
-</head>
-<body>
+{% extends 'HealthTracker/base.html' %}
+
+{% block title %}Health Tracking App{% endblock %}
+
+{% block content %}
     <header>
         <h1>Welcome to Health Tracking App</h1>
     </header>
@@ -28,10 +25,10 @@
         <section>
             <h2>Get Started</h2>
             {% if user.is_authenticated %}
-            Hi {{ user.username }}!
+                Hi {{ user.username }}!
             {% else %}
-            <p>You are not logged in</p>
-            <a href="{% url 'login' %}">Log In</a>
+                <p>You are not logged in</p>
+                <a href="{% url 'login' %}">Log In</a>
             {% endif %}
         </section>
     </main>
@@ -39,5 +36,4 @@
     <footer>
         <p>&copy; 2024 Health Tracking App</p>
     </footer>
-</body>
-</html>
+{% endblock %}

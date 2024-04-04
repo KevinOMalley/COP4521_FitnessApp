@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-immi=u13^rahopaa0cls(*x1r9*oj1+s8h+fpb21v$7-(7_2zk
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL = "HealthTracker.Account"
 
 # Application definition
 
@@ -67,9 +67,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'health_db',
-        'USER' : 'user',
-        'PASSWORD': 'pass',
-        'HOST': 'localhost',
+        'USER' : 'bakerrya',
+        'PASSWORD': 'Qwertyrocks123!',
+        'HOST': 'database-1.ctmqeqqgotz2.us-east-2.rds.amazonaws.com',
         'PORT' : '3306',
 
     }
