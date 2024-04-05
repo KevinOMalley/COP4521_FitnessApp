@@ -5,5 +5,8 @@ from django.contrib.auth import authenticate, login
 
 def index(request):
     template = loader.get_template("HealthTracker/index.html")
-    context = {} 
+    context = {}
     return HttpResponse(template.render(context, request))
+
+def about(request):
+    return render(request, 'HealthTracker/about.html')
