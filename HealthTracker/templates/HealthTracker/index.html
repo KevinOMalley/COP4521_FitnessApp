@@ -31,6 +31,12 @@
         width: 100%;
     }
 
+    /* Content wrapper */
+    #content-wrapper {
+        max-height: 70vh; /* Adjust the height as needed */
+        overflow-y: auto; /* Enable vertical scrolling */
+    }
+
     /* Main content styling */
     main {
         padding: 2em;
@@ -95,31 +101,33 @@
     <h1>Welcome to Health Tracker</h1>
 </header>
 
-<main>
-    <section class="section text-center">
-        <h2>About Health Tracker</h2>
-        <p>Monitor and improve your health with our easy-to-use tracking application.</p>
-    </section>
+<div id="content-wrapper">
+    <main>
+        <section class="section text-center">
+            <h2>About Health Tracker</h2>
+            <p>Monitor and improve your health with our easy-to-use tracking application.</p>
+        </section>
 
-    <section class="section">
-        <h2>Features</h2>
-        <ul>
-            <li>Track your daily nutrition and exercise habits</li>
-            <li>Set and achieve personal health goals</li>
-            <li>Gain insights with detailed reports</li>
-        </ul>
-    </section>
+        <section class="section">
+            <h2>Features</h2>
+            <ul>
+                <li>Track your daily nutrition and exercise habits</li>
+                <li>Set and achieve personal health goals</li>
+                <li>Gain insights with detailed reports</li>
+            </ul>
+        </section>
 
-    <section class="section">
-        <h2>Get Started</h2>
-        {% if user.is_authenticated %}
-            <p class="text-center">Welcome back, {{ user.username }}!</p>
-        {% else %}
-            <p class="text-center">Join us today and embark on your journey to a healthier lifestyle!</p>
-            <a href="{% url 'login' %}" class="login-button">Log In</a>
-        {% endif %}
-    </section>
-</main>
+        <section class="section">
+            <h2>Get Started</h2>
+            {% if user.is_authenticated %}
+                <p class="text-center">Welcome back, {{ user.username }}!</p>
+            {% else %}
+                <p class="text-center">Join us today and embark on your journey to a healthier lifestyle!</p>
+                <a href="{% url 'login' %}" class="login-button">Log In</a>
+            {% endif %}
+        </section>
+    </main>
+</div>
 
 <footer>
     <p>© 2024 Health Tracker. All rights reserved.</p>

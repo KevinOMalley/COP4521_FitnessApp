@@ -27,6 +27,11 @@
         .content {
             margin: 1em;
         }
+        /* Content wrapper */
+        #content-wrapper {
+            max-height: 70vh; /* Adjust the height as needed */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
     </style>
     <!-- Include any additional CSS files here -->
 </head>
@@ -44,8 +49,10 @@
 </div>
 
 <div class="content">
-    {% block content %}
-    {% endblock %}
+    <div id="content-wrapper">
+        {% block content %}
+        {% endblock %}
+    </div>
 </div>
 
 </body>
