@@ -9,11 +9,13 @@
 
 <!-- Toolbar -->
 <div class="toolbar">
-    <ul>
-        <li><a href="{% url 'login' %}">Home</a></li>
-        <li><a href="{% url 'login' %}">About</a></li>
-        <!-- Add more toolbar items as needed -->
-    </ul>
+    <a href="{% url 'index' %}">
+        <button>Home</button>
+    </a>
+    <a href="{% url 'index' %}">
+        <button>About</button>
+    </a>
+    <!-- Add more toolbar items as needed -->
 </div>
 
 <div class="content">
