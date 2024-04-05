@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         .toolbar {
-            background-color: #a600ff;
+            background-color: #0052cc;
             padding: 0.5em 0;
             text-align: center;
         }
@@ -37,7 +37,7 @@
     <a href="{% url 'index' %}">
         <button>Home</button>
     </a>
-    <a href="{% url 'index' %}"> <!-- Updated URL for the About page -->
+    <a href="{% url 'login' %}"> <!-- Updated URL for the About page -->
         <button>About</button>
     </a>
     <!-- Add more toolbar items as needed -->
@@ -50,30 +50,3 @@
 
 </body>
 </html>
-
-
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
-{#    <!-- Include any CSS files here -->#}
-{#</head>#}
-{#<body>#}
-{##}
-{#<!-- Toolbar -->#}
-{#TODO: Finish me#}
-{#<div class="toolbar">#}
-{#    <a href="{% url 'index' %}">#}
-{#        <button>Home</button>#}
-{#    </a>#}
-{#    <a href="{% url 'index' %}">#}
-{#        <button>About</button>#}
-{#    </a>#}
-{#    <!-- Add more toolbar items as needed -->#}
-{#</div>#}
-{##}
-{#<div class="content">#}
-{#    {% block content %}#}
-{#    {% endblock %}#}
-{#</div>#}
