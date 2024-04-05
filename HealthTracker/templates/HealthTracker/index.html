@@ -3,37 +3,75 @@
 {% block title %}Health Tracking App{% endblock %}
 
 {% block content %}
-    <header>
-        <h1>Welcome to Health Tracking App</h1>
-    </header>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    header, footer {
+        background-color: #a600ff;
+        color: white;
+        text-align: center;
+        padding: 1em 0;
+    }
+    main {
+        padding: 2em;
+    }
+    h1, h2 {
+        color: #ffffff;
+    }
+    p {
+        color: #666;
+    }
+    a {
+        color: #a600ff;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    .section {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 2em;
+        padding: 2em;
+    }
+</style>
 
-    <main>
-        <section>
-            <h2>About Health Tracking App</h2>
-            <p>This is a simple health tracking application.</p>
-        </section>
+<header>
+    <h1>Welcome to [APPLICATION NAME]</h1>
+</header>
 
-        <section>
-            <h2>Features</h2>
-            <ul>
-                <li>Feature 1</li>
-                <li>Feature 2</li>
-                <li>Feature 3</li>
-            </ul>
-        </section>
+<main>
+    <section class="section">
+        <h2>About Health Tracking App</h2>
+        <p>This is a simple health tracking application designed to help you monitor and improve your health.</p>
+    </section>
 
-        <section>
-            <h2>Get Started</h2>
-            {% if user.is_authenticated %}
-                Hi {{ user.username }}!
-            {% else %}
-                <p>You are not logged in</p>
-                <a href="{% url 'login' %}">Log In</a>
-            {% endif %}
-        </section>
-    </main>
+    <section class="section">
+        <h2>Features</h2>
+        <ul>
+            <li>Track your daily nutrition and exercise</li>
+            <li>Set personal health goals</li>
+            <li>View detailed reports and insights</li>
+        </ul>
+    </section>
 
-    <footer>
-        <p>&copy; 2024 Health Tracking App</p>
-    </footer>
+    <section class="section">
+        <h2>Get Started</h2>
+        {% if user.is_authenticated %}
+            <p>Welcome back, {{ user.username }}!</p>
+        {% else %}
+            <p>You are not logged in. Join us today and start your journey to better health!</p>
+            <a href="{% url 'login' %}" class="login-button">Log In</a>
+        {% endif %}
+    </section>
+</main>
+
+<footer>
+    <p>© 2024 Health Tracking App. All rights reserved.</p>
+</footer>
 {% endblock %}

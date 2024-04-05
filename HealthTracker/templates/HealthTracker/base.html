@@ -3,17 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Include any CSS files here -->
+    <style>
+        .toolbar {
+            background-color: #a600ff;
+            padding: 0.5em 0;
+            text-align: center;
+        }
+        .toolbar a {
+            text-decoration: none;
+        }
+        .toolbar button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            margin: 0 0.5em;
+            padding: 0.5em 1em;
+            transition: background-color 0.3s ease;
+        }
+        .toolbar button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .content {
+            margin: 1em;
+        }
+    </style>
+    <!-- Include any additional CSS files here -->
 </head>
 <body>
 
 <!-- Toolbar -->
-{#TODO: Finish me#}
-<div class="toolbar"> TODO
+<div class="toolbar">
     <a href="{% url 'index' %}">
         <button>Home</button>
     </a>
-    <a href="{% url 'index' %}"> 
+    <a href="{% url 'index' %}"> <!-- Updated URL for the About page -->
         <button>About</button>
     </a>
     <!-- Add more toolbar items as needed -->
@@ -23,3 +47,33 @@
     {% block content %}
     {% endblock %}
 </div>
+
+</body>
+</html>
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <!-- Include any CSS files here -->#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<!-- Toolbar -->#}
+{#TODO: Finish me#}
+{#<div class="toolbar">#}
+{#    <a href="{% url 'index' %}">#}
+{#        <button>Home</button>#}
+{#    </a>#}
+{#    <a href="{% url 'index' %}">#}
+{#        <button>About</button>#}
+{#    </a>#}
+{#    <!-- Add more toolbar items as needed -->#}
+{#</div>#}
+{##}
+{#<div class="content">#}
+{#    {% block content %}#}
+{#    {% endblock %}#}
+{#</div>#}
