@@ -77,7 +77,7 @@ class FoodEntry(models.Model):
     date = models.DateField(auto_now_add=True)
     meal_type = models.CharField(max_length=20, choices=[
         ('breakfast', 'Breakfast'),
-        ('brunch', 'Brunch')
+        ('brunch', 'Brunch'),
         ('lunch', 'Lunch'),
         ('dinner', 'Dinner'),
         ('snack', 'Snack')
@@ -91,10 +91,10 @@ class FoodEntry(models.Model):
     notes = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.food_name} - {self.calories} calories ({self.user.username}) - {self.meal_type}"
+        return f"{self.food_name} - {self.calories} calories ({self.user.username})"
     
     
-class Goals(models.Models):
+class Goals(models.Model):
     # Weight Goal
     # Step Goal
     # Calorie Goal
