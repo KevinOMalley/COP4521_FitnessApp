@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager
 
 
+
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, password=None):
         if not email:
@@ -29,7 +30,6 @@ class MyAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
         
-
 
 class Account(AbstractBaseUser):
     username = models.CharField(max_length=20, unique=True)
@@ -62,8 +62,41 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+
 class Userhealth(models.Model):
     username = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key = True,)
     weight = models.IntegerField()
     height = models.IntegerField()
     goals = models.TextField(null=True)
+
+
+class FoodEntry(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    food_name = models.CharField(max_length=50)
+    calories = models.IntegerField()
+    date = models.DateField(auto_now_add=True)
+    meal_type = models.CharField(max_length=20, choices=[
+        ('breakfast', 'Breakfast'),
+        ('brunch', 'Brunch')
+        ('lunch', 'Lunch'),
+        ('dinner', 'Dinner'),
+        ('snack', 'Snack')
+    ])
+    
+    '''
+    User can add notes about the food they had. 
+    -How they felt about it. More or less. Taste, etc.
+    -Nutritional facts that they would like to keep track of based on different diets
+    '''
+    notes = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.food_name} - {self.calories} calories ({self.user.username}) - {self.meal_type}"
+    
+    
+class Goals(models.Models):
+    # Weight Goal
+    # Step Goal
+    # Calorie Goal
+    # Sleep Goal
+    pass
