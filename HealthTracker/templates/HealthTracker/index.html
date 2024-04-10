@@ -84,10 +84,11 @@
 
     /* Login button */
     .login-button {
-        display: inline-block;
+        display: block;
+        margin: 0 auto;
         background-color: #005a9c;
         color: #fff;
-        padding: 0.5em 1em;
+        padding: 0.5em 0.5em;
         border-radius: 4px;
         transition: background-color 0.3s ease;
     }
@@ -123,7 +124,7 @@
                 <p class="text-center">Welcome back, {{ user.username }}!</p>
             {% else %}
                 <p class="text-center">Join us today and embark on your journey to a healthier lifestyle!</p>
-                <a href="{% url 'login' %}" class="login-button">Log In</a>
+                <a href="{% url 'login' %}" class="login-button text-center">Log In</a>
             {% endif %}
         </section>
     </main>
