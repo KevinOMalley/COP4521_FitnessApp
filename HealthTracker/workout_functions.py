@@ -7,7 +7,7 @@ def pounds_to_kg(weight_lb_flt):
 
 
 # Kilograms to pounds
-#Takes in kilograms as a float and converts it to pounds as a float
+# Takes in kilograms as a float and converts it to pounds as a float
 def kg_to_pounds(weight_kg_flt):
     return (weight_kg_flt * 2.20462)
 
