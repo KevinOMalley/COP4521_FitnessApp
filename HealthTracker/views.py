@@ -7,17 +7,21 @@ from django.contrib.auth.models import User
 from .forms import RegisterForm
 
 def register_view(request):
+    user = request.user
+    if user.is_authenticated:
+        return HttpResponse(f"You are authenticated as {username}")
+    
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            # Create a new user instance
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = User.objects.create_user(username=username, email=email, password=password)
             user.save()
-            # Redirect to a success page or login page
-            return redirect('registration/login.html')
+            account = authenticate(email=email, username=username,password=password)
+            login(request,account)
+            return redirect("index")
     else:
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form': form})
