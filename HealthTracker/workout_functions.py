@@ -1,19 +1,20 @@
 # Contains functions to calculate calories and other health-related things
+# I tried to avoid using MET (Metabolic Equivilant of Task) values in the calculations as it's kind of a pain for a person to have to calculate what their MET is for each exercise.
 
 # Pounds to Kilograms
-# Takes in pounds as a float and converts it to kilograms as a float
+# Takes in weight in pounds as a float and converts it to weight in kilograms as a float
 def pounds_to_kg(weight_lb_flt):
     return (weight_lb_flt * .45359237)
 
 
 # Kilograms to pounds
-# Takes in kilograms as a float and converts it to pounds as a float
+# Takes in weight in kilograms as a float and converts it to weight in pounds as a float
 def kg_to_pounds(weight_kg_flt):
     return (weight_kg_flt * 2.20462)
 
 
-# Pushups to Calories
-# Takes in a number of pushups as a float and a person's weight in kilograms as a float and converts it to Calories(kcal) as a float
+# Push-Ups to Calories
+# Takes in a number of push-ups as a float and a person's weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
 def pushup_to_calories(pushup_flt, weight_kg_flt):
     return ((weight_kg_flt / 100) * (.1) * (pushup_flt))
 
@@ -56,3 +57,79 @@ def recommended_sleep(age_flt):
         return (7, 9)
     else:  # Senior Citizens (65+ years)
         return (7, 8)
+
+
+# Converts miles to kilometers
+# Takes in distance in miles as a float and returns distance in kilometers as a float
+def miles_to_km(distance_miles_flt):
+    return (distance_miles_flt * 1.609344)
+
+
+# Converts kilometers to miles
+# Takes in distance in kilometers as a float and returns distance in miles as a float
+def km_to_miles(distance_km_flt):
+    return (distance_km_flt * 0.62137119)
+
+
+# Distance ran(kilometers) to Calories(kcal)
+# Takes in the distance ran in kilometers as a float and weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
+def distance_ran_to_calories(distance_km_flt, weight_kg_flt):
+    return (distance_km_flt * weight_kg_flt * 1.036)
+
+
+# Distance walked(kilometers) to Calories(kcal)
+# Takes in the distance walked in kilometers as a float and weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
+def distance_walked_to_calories(distance_km_flt, weight_kg_flt):
+    return (distance_km_flt * weight_kg_flt * 0.53)
+
+
+# Pull-Ups to Calories
+# Takes in a number of pull-ups as a float and a person's weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
+def pullup_to_calories(pullup_flt, weight_kg_flt):
+    if 0 <= weight_kg_flt < 56.8:  # Light Weight
+        return (3 * pullup_flt)  # (2.5 - 3.5)
+    elif 56.8 <= weight_kg_flt < 70.4:  # Moderate Weight
+        return (3.5 * pullup_flt)  # (3 - 4)
+    elif 70.4 <= weight_kg_flt < 84:  # Heavy Weight
+        return (4 * pullup_flt)  # (3.5 - 4.5)
+    else:  # Very Heavy Weight
+        return (4.5 * pullup_flt)  # (4 - 5)
+
+
+# Sit-Ups to Calories
+# Takes in a number of sit-ups as a float and a person's weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
+def situp_to_calories(situp_flt, weight_kg_flt):
+    if 0 <= weight_kg_flt < 56.8:  # Light Weight
+        return (.375 * situp_flt)  # (.25 - .5)
+    elif 56.8 <= weight_kg_flt < 70.4:  # Moderate Weight
+        return (.75 * situp_flt)  # (.5 - 1)
+    elif 70.4 <= weight_kg_flt < 84:  # Heavy Weight
+        return (situp_flt)  # (1 * situp_flt)        #(.75 - 1.25)
+    else:  # Very Heavy Weight
+        return (1.25 * situp_flt)  # (1 - 1.5)
+
+
+# Squats to Calories
+# Takes in a number of squats as a float and a person's weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
+def squat_to_calories(squat_flt, weight_kg_flt):
+    if 0 <= weight_kg_flt < 56.8:  # Light Weight
+        return (.15 * squat_flt)  # (.1 - .2)
+    elif 56.8 <= weight_kg_flt < 70.4:  # Moderate Weight
+        return (.25 * squat_flt)  # (.2 - .3)
+    elif 70.4 <= weight_kg_flt < 84:  # Heavy Weight
+        return (.35 * squat_flt)  # (.3 - .4)
+    else:  # Very Heavy Weight
+        return (.45 * squat_flt)  # (.4 - .5)
+
+
+# Jumping-Jacks to Calories
+# Takes in a number of jumping-jacks as a float and a person's weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
+def jumpingjack_to_calories(jumpingjack_flt, weight_kg_flt):
+    if 0 <= weight_kg_flt < 56.8:  # Light Weight
+        return (.05 * jumpingjack_flt * weight_kg_flt)  # (.045 - .055)
+    elif 56.8 <= weight_kg_flt < 70.4:  # Moderate Weight
+        return (.055 * jumpingjack_flt * weight_kg_flt)  # (.05 - .06)
+    elif 70.4 <= weight_kg_flt < 84:  # Heavy Weight
+        return (.06 * jumpingjack_flt * weight_kg_flt)  # (.055 - .065)
+    else:  # Very Heavy Weight
+        return (.065 * jumpingjack_flt * weight_kg_flt)  # (.06 - .07)
