@@ -1,5 +1,17 @@
 # Contains functions to calculate calories and other health-related things
-# I tried to avoid using MET (Metabolic Equivilant of Task) values in the calculations as it's kind of a pain for a person to have to calculate what their MET is for each exercise.
+# I tried to avoid using MET (Metabolic Equivalent of Task) values in the calculations as it's kind of a pain for a person to have to calculate what their MET is for each exercise.
+
+# Converts miles to kilometers
+# Takes in distance in miles as a float and returns distance in kilometers as a float
+def miles_to_km(distance_miles_flt):
+    return (distance_miles_flt * 1.609344)
+
+
+# Converts kilometers to miles
+# Takes in distance in kilometers as a float and returns distance in miles as a float
+def km_to_miles(distance_km_flt):
+    return (distance_km_flt * 0.62137119)
+
 
 # Pounds to Kilograms
 # Takes in weight in pounds as a float and converts it to weight in kilograms as a float
@@ -11,12 +23,6 @@ def pounds_to_kg(weight_lb_flt):
 # Takes in weight in kilograms as a float and converts it to weight in pounds as a float
 def kg_to_pounds(weight_kg_flt):
     return (weight_kg_flt * 2.20462)
-
-
-# Push-Ups to Calories
-# Takes in a number of push-ups as a float and a person's weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
-def pushup_to_calories(pushup_flt, weight_kg_flt):
-    return ((weight_kg_flt / 100) * (.1) * (pushup_flt))
 
 
 # Calculates Body Mass Index
@@ -59,18 +65,6 @@ def recommended_sleep(age_flt):
         return (7, 8)
 
 
-# Converts miles to kilometers
-# Takes in distance in miles as a float and returns distance in kilometers as a float
-def miles_to_km(distance_miles_flt):
-    return (distance_miles_flt * 1.609344)
-
-
-# Converts kilometers to miles
-# Takes in distance in kilometers as a float and returns distance in miles as a float
-def km_to_miles(distance_km_flt):
-    return (distance_km_flt * 0.62137119)
-
-
 # Distance ran(kilometers) to Calories(kcal)
 # Takes in the distance ran in kilometers as a float and weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
 def distance_ran_to_calories(distance_km_flt, weight_kg_flt):
@@ -81,6 +75,24 @@ def distance_ran_to_calories(distance_km_flt, weight_kg_flt):
 # Takes in the distance walked in kilometers as a float and weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
 def distance_walked_to_calories(distance_km_flt, weight_kg_flt):
     return (distance_km_flt * weight_kg_flt * 0.53)
+
+
+# Distance biked(kilometers) to Calories(kcal)
+# Takes in the distance biked in kilometers as a float and weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
+def distance_biked_to_calories(distance_km_flt, weight_kg_flt):
+    return (distance_km_flt * weight_kg_flt * 0.55)  # Moderate Intensity (.35 - .7)
+
+
+# Distance swam(kilometers) to Calories(kcal)
+# Takes in the distance swam in kilometers as a float and weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
+def distance_swam_to_calories(distance_km_flt, weight_kg_flt):
+    return (distance_km_flt * weight_kg_flt * 0.6)  # Moderate Intensity (.4 - .8)
+
+
+# Push-Ups to Calories
+# Takes in a number of push-ups as a float and a person's weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
+def pushup_to_calories(pushup_flt, weight_kg_flt):
+    return ((weight_kg_flt / 100) * (.1) * (pushup_flt))
 
 
 # Pull-Ups to Calories
@@ -133,3 +145,9 @@ def jumpingjack_to_calories(jumpingjack_flt, weight_kg_flt):
         return (.06 * jumpingjack_flt * weight_kg_flt)  # (.055 - .065)
     else:  # Very Heavy Weight
         return (.065 * jumpingjack_flt * weight_kg_flt)  # (.06 - .07)
+
+
+# Shoulder-Shrugs to Calories
+# Takes in a number of shoulder-shrugs as a float and a person's weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
+def shrug_to_calories(shrug_flt, weight_kg_flt):
+    return ((.03) * (shrug_flt))  # Moderate Intensity (.02 - .04)
