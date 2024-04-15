@@ -38,6 +38,7 @@
                 <h2>Get Started</h2>
                 {% if user.is_authenticated %}
                     <p class="lead">Welcome back, {{ user.username }}!</p>
+                    <a href="{% url 'profile' %}" class="btn btn-outline-primary">Account Details</a>
                 {% else %}
                     <p class="lead">Join us today and embark on your journey to a healthier lifestyle!</p>
                     <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
