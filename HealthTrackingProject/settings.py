@@ -59,6 +59,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'HealthTrackingProject.wsgi.application'
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

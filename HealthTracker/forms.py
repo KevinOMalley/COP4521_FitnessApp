@@ -12,3 +12,10 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = Account
         fields = ('email', 'username', 'password1', 'password2')
+
+class AuthenticationForm(forms.ModelForm):
+    password = forms.CharField(label="Password", widget = forms.PasswordInput)
+    
+    class Meta:
+        model = Account
+        fields = ("username", "password")
