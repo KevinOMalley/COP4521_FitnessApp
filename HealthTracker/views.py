@@ -81,11 +81,10 @@ def user_profile(request):
 @login_required
 def health_info(request):
     user = request.user
-    # try:
-    #     health_info = UserHealth.objects.get(user=user)
-    # except UserHealth.DoesNotExist:
-    #     health_info = None
-    health_info = UserHealth.objects.filter(username=user.username)
+    try:
+        health_info = UserHealth.objects.get(user=user)
+    except UserHealth.DoesNotExist:
+        health_info = None
     if request.POST:
         form = HealthForm(request.POST, instance=health_info)
         if form.is_valid():
