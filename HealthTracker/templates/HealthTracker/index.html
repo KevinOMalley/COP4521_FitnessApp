@@ -39,6 +39,8 @@
                 {% if user.is_authenticated %}
                     <p class="lead">Welcome back, {{ user.username }}!</p>
                     <a href="{% url 'profile' %}" class="btn btn-outline-primary">Account Details</a>
+                    <a href="{% url 'user_home' %}" class="btn btn-primary">Your Health Info and Goals DaRealOne</a>
+                    <a href="{% url 'health' %}" class="btn btn-primary">Your Health Info and Goals</a>
                 {% else %}
                     <p class="lead">Join us today and embark on your journey to a healthier lifestyle!</p>
                     <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
@@ -49,10 +51,4 @@
         </div>
     </section>
 </main>
-
-<footer class="bg-primary py-3">
-    <div class="container">
-        <p class="text-white text-center mb-0">© 2024 Health Tracker. All rights reserved.</p>
-    </div>
-</footer>
 {% endblock %}

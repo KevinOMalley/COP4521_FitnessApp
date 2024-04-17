@@ -5,13 +5,13 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from HealthTracker.models import Account
-from .forms import RegisterForm, AuthenticationForm
+from HealthTracker.models import Account, UserHealth
+from .forms import RegisterForm, AuthenticationForm, HealthForm
 
 def register_view(request, *args, **kwargs):
     user = request.user
     if user.is_authenticated:
-        return HttpResponse("You are already authenticated as " + str(username))
+        return HttpResponse("You are already authenticated.")
 
     context = {}
     if request.POST:
@@ -77,3 +77,34 @@ def user_profile(request):
         'account': account,
     }
     return render(request, "HealthTracker/user_profile.html", context)
+
+@login_required
+def userHome(request):
+    user = request.user
+    account = Account.objects.get(username=user.username)
+    context = {
+        'account': account,
+    }
+    return render(request, "HealthTracker/user_page/user_home.html", context)
+
+@login_required
+def health_info(request):
+    user = request.user
+    try:
+        health_info = UserHealth.objects.get(user=user)
+    except UserHealth.DoesNotExist:
+        health_info = None
+    if request.POST:
+        form = HealthForm(request.POST, instance=health_info)
+        if form.is_valid():
+            health_data = form.save(commit=False)
+            health_data.username_id = user.username
+            health_data.save()
+    else:
+        form = HealthForm(instance=health_info)
+
+    context = {
+        'health_info': health_info,
+        'form': form,
+    }
+    return render(request, 'HealthTracker/health_info.html', context)
