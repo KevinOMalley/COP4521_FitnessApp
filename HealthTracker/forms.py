@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from HealthTracker.models import Account
+from .models import Account, UserHealth
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
@@ -19,3 +19,8 @@ class AuthenticationForm(forms.ModelForm):
     class Meta:
         model = Account
         fields = ("username", "password")
+
+class HealthForm(forms.ModelForm):
+    class Meta:
+        model = UserHealth
+        fields = ('weight', 'height', 'goals')

@@ -64,7 +64,7 @@ class Account(AbstractBaseUser):
         return True
 
 
-class Userhealth(models.Model):
+class UserHealth(models.Model):
     username = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key = True,)
     weight = models.IntegerField()
     height = models.IntegerField()
