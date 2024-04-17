@@ -13,6 +13,58 @@
         #content-wrapper {
             max-height: 70vh;
             overflow-y: auto;
+            padding-bottom: 60px;
+        }
+        .bg-primary {
+        background-color: #494141 !important;
+        }
+
+        .text-primary {
+            color: #d16535 !important;
+        }
+
+        .nav-pills .nav-link.active, .nav-pills .nav-link.active:hover, .nav-pills .nav-link.active:focus {
+            background-color: #494141 !important; /* Change background color to black */
+            border-color: #494141 !important; /* Change border color to black if there is one */
+        }
+
+        .nav-pills .nav-link {
+            color: darkgray !important; /* Change text color to black */
+        }
+
+        html, body {
+        height: 100%;
+        margin: 0;
+        }
+        .content {
+        min-height: 100%;
+        }
+
+        footer { /* put footer to bottom of page*/
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        }
+
+        .btn-primary {
+            background-color: #494141 !important;
+            border-color: #494141 !important;
+        }
+
+        .btn-outline-primary {
+            color: #494141 !important;
+            border-color: #494141 !important;
+        }
+
+        .btn-primary:hover {
+            background-color: #e67946 !important;
+            border-color: #e67946 !important;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #e67946 !important;
+
         }
     </style>
 </head>
@@ -55,6 +107,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
+
+<footer class="bg-primary py-3">
+    <div class="container">
+        <p class="text-white text-center mb-0">© 2024 Health Tracker</p>
+    </div>
+</footer>
 </html>
 
 <script>

@@ -79,6 +79,15 @@ def user_profile(request):
     return render(request, "HealthTracker/user_profile.html", context)
 
 @login_required
+def userHome(request):
+    user = request.user
+    account = Account.objects.get(username=user.username)
+    context = {
+        'account': account,
+    }
+    return render(request, "HealthTracker/user_page/user_home.html", context)
+
+@login_required
 def health_info(request):
     user = request.user
     try:
