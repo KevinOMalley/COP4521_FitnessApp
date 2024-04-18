@@ -102,6 +102,14 @@ class FoodEntry(models.Model):
         return f"{self.food_name} - {self.calories} calories ({self.user.username})"
     
     
+class Workout(models.Model):
+    date = models.DateTimeField(auto_now_add = True)
+    activity_type = models.CharField(max_length=50) #running, swimming, etc.
+    
+    def __str__(self):
+        return f"{self.activity_type} on {self.date}"
+    
+    
 class Goals(models.Model):
     # Weight Goal
     # Step Goal
