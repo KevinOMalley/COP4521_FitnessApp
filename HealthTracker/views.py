@@ -5,7 +5,7 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from HealthTracker.models import Account, UserHealthInfo
+from HealthTracker.models import Account, UserHealthInfo, MyAccountManager
 from .forms import RegisterForm, AuthenticationForm, HealthInfoForm
 
 def register_view(request, *args, **kwargs):
@@ -17,12 +17,14 @@ def register_view(request, *args, **kwargs):
     if request.POST:
         form = RegisterForm(request.POST)
         if form.is_valid():
-            #form.save implicitly calls create_user which saves an instance of object to database
-            form.save()
             print("User saved successfully.")
+            email = form.cleaned_data.get('email')
             username = form.cleaned_data.get('username')
-            UserModel = get_user_model()
-            user = UserModel._default_manager.get(username=username)
+            password = form.cleaned_data.get('password')
+            is_under_18 = form.cleaned_data.get('is_under_18')
+
+            user = Account.objects.create_user(email=email, username=username, is_child=is_under_18, password=password)
+
             login(request, user)
             return redirect('index')
         else:

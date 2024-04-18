@@ -3,16 +3,25 @@ from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager
 
 
 class MyAccountManager(BaseUserManager):
-    def create_user(self, email, username, password=None):
+    def create_user(self, email, username, is_child, password=None,):
         if not email:
             raise ValueError("Users must have email address")
         if not username:
             raise ValueError("Users must have a username")
         
-        user = self.model(
-            email = self.normalize_email(email),
-            username = username,
-        )
+        if is_child:
+            user = self.model(
+                email = self.normalize_email(email),
+                username = username,
+                is_child = is_child,
+                is_adult= not is_child
+            )
+        else:
+            user = self.model(
+                email = self.normalize_email(email),
+                username = username
+            )
+
         user.set_password(password)
         user.save(using=self._db)
         print("create user called")

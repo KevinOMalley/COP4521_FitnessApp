@@ -8,7 +8,7 @@ class LoginForm(forms.Form):
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(max_length=255)
-
+    is_under_18 = forms.BooleanField(label="Are you under 18?", required=False)
     class Meta:
         model = Account
         fields = ('email', 'username', 'password1', 'password2')
