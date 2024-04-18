@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
@@ -31,11 +31,10 @@ def register_view(request, *args, **kwargs):
             for field in form:
                 print("Field Error:", field.name,  field.errors)
 
-            context['registration_form'] = form
     else:
         form = RegisterForm()
-        context['registration_form'] = form
-
+    
+    context['registration_form'] = form
     return render(request, 'registration/register.html', context)
 
 def index(request):
@@ -93,6 +92,13 @@ def userHome(request):
 def workoutTracker(request):
     user = request.user
     account = Account.objects.get(username=user.username)
+
+    if account.is_child:
+        context = {
+            'message': "This feature is not available for users under 18"
+        }
+        return render(request, "HealthTracker/user_page/tracker_pages/forbidden.html", context)
+    
     context = {
         'account': account,
     }

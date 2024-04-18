@@ -10,16 +10,26 @@
                     <form class="form-signin" method="post">
                         {% csrf_token %}
                         <div class="form-group mb-3">
+                            <label for="inputEmail">Email:</label>
                             <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required>
                         </div>
                         <div class="form-group mb-3">
+                            <label for="inputUsername">Username:</label>
                             <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required>
                         </div>
                         <div class="form-group mb-3">
+                            <label for="inputPassword1">Password:</label>
                             <input type="password" name="password1" id="inputPassword1" class="form-control" placeholder="Password" required>
+                            {% for error in registration_form.password1.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
                         </div>
                         <div class="form-group mb-3">
+                            <label for="inputPassword2">Password confirmation:</label>
                             <input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Password" required>
+                            {% for error in registration_form.password2.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
                         </div>
                         <div class="form-group mb-3 form-check">
                             <input type="checkbox" name="is_under_18" id="under18Checkbox" class="form-check-input">
