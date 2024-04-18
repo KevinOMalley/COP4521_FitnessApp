@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager
 
 
-
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, password=None):
         if not email:
@@ -64,12 +63,11 @@ class Account(AbstractBaseUser):
         return True
 
 
-class UserHealth(models.Model):
-    username = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key = True,)
+class UserHealthInfo(models.Model):
+    username = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key=True)
     weight = models.IntegerField()
     height = models.IntegerField()
     goals = models.TextField(null=True)
-
 
 class FoodEntry(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)

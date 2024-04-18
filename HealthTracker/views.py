@@ -5,8 +5,8 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from HealthTracker.models import Account, UserHealth
-from .forms import RegisterForm, AuthenticationForm, HealthForm
+from HealthTracker.models import Account, UserHealthInfo
+from .forms import RegisterForm, AuthenticationForm, HealthInfoForm
 
 def register_view(request, *args, **kwargs):
     user = request.user
@@ -90,18 +90,21 @@ def userHome(request):
 @login_required
 def health_info(request):
     user = request.user
+    user_instance = Account.objects.get(username = user.username)
     try:
-        health_info = UserHealth.objects.get(user=user)
-    except UserHealth.DoesNotExist:
+        health_info = UserHealthInfo.objects.get(username=user_instance)
+    except UserHealthInfo.DoesNotExist:
         health_info = None
-    if request.POST:
-        form = HealthForm(request.POST, instance=health_info)
+    
+    if request.method == 'POST':
+        form = HealthInfoForm(request.POST, instance=health_info)
         if form.is_valid():
             health_data = form.save(commit=False)
-            health_data.username_id = user.username
+            health_data.username = user_instance
             health_data.save()
+            return redirect('index')  # Redirect to the same page after saving
     else:
-        form = HealthForm(instance=health_info)
+        form = HealthInfoForm(instance=health_info)
 
     context = {
         'health_info': health_info,

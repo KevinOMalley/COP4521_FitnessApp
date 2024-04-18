@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Account, UserHealth
+from .models import Account, UserHealthInfo
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
@@ -20,7 +20,8 @@ class AuthenticationForm(forms.ModelForm):
         model = Account
         fields = ("username", "password")
 
-class HealthForm(forms.ModelForm):
+
+class HealthInfoForm(forms.ModelForm):
     class Meta:
-        model = UserHealth
+        model = UserHealthInfo
         fields = ('weight', 'height', 'goals')
