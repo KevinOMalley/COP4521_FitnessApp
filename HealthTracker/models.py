@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager
+from datetime import timedelta
 
 
 class MyAccountManager(BaseUserManager):
@@ -105,6 +106,25 @@ class FoodEntry(models.Model):
 class Workout(models.Model):
     date = models.DateTimeField(auto_now_add = True)
     activity_type = models.CharField(max_length=50) #running, swimming, etc.
+    duration = models.DurationField(default=timedelta(seconds=0))
+    miles = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    kilometers = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    rest_periods = models.IntegerField(default=0)
+    sets = models.IntegerField(default=0)
+    reps = models.IntegerField(default=0)
+    notes = models.TextField(blank=True, max_length=200)
+    rating = models.CharField(max_length=20, choices = (
+        ('easy', 'Easy'),
+        ('moderate', 'Moderate'),
+        ('difficult', 'Difficult')      
+    ), default='easy')
+    
+    def get_formatted_duration(self):
+        hours, remainder = divmod(self.duration.seconds, 3600)
+        minutes = remainder // 60
+        seconds = remainder % 60
+        formatted_duration = f"{hours}h {minutes}m {seconds}s"
+        return formatted_duration    
     
     def __str__(self):
         return f"{self.activity_type} on {self.date}"
