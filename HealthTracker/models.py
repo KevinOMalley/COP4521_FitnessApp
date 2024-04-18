@@ -130,6 +130,34 @@ class Workout(models.Model):
         return f"{self.activity_type} on {self.date}"
     
     
+class Sleep(models.Model):
+    date = models.DateField(auto_now_add=True)
+    fell_asleep_approx = models.TimeField()
+    woke_up_at = models.TimeField()
+    total_sleep_duration = models.DurationField(null=True, blank=True)
+    notes = models.TextField(blank=True, max_length=200)
+    sleep_quality = models.CharField(max_length=30, default='', choices= (
+        ('exhausted', 'Exhausted'),
+        ('tired', 'Tired'),
+        ('groggy', 'Groggy'),
+        ('rested', 'Rested'),
+        ('energized', 'Energized')
+    ))
+    
+    def get_total_sleep_duartion(self):
+        if self.fell_asleep_approx and self.woke_up_at:
+            sleep_duration = self.woke_up_at - self.fell_asleep_approx
+            
+            if sleep_duration.total_seconds() < 0:
+                sleep_duration += timedelta(days=1)
+            self.total_sleep_duration = sleep_duration
+        return self.total_sleep_duration
+            
+            
+    def __str__(self):
+        return f"Slept on {self.date} for {self.total_sleep_duration}"
+    
+    
 class Goals(models.Model):
     # Weight Goal
     # Step Goal
