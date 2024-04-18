@@ -3,22 +3,29 @@
 {% block title %}Health Tracker{% endblock %}
 
 {% block content %}
-<header class="bg-primary py-5">
-    <div class="container">
-        <h1 class="text-white text-center">Welcome to Health Tracker</h1>
-    </div>
-</header>
-
 <main class="container py-5">
     <section class="section mb-5">
         <div class="row">
             <div class="col-md-8 mx-auto text-center">
-                <h2>About Health Tracker</h2>
+                <h2>Welcome to Health Tracker</h2>
                 <p class="lead">Monitor and improve your health with our easy-to-use tracking application.</p>
             </div>
         </div>
     </section>
 
+    {% if user.is_authenticated %}
+    <section class="section mb-5">
+        <div class="row">
+            <div class="col-md-8 mx-auto text-center">
+                <h2>Get Started</h2>
+                    <p class="lead">Welcome back, {{ user.username }}!</p>
+                    <a href="{% url 'profile' %}" class="btn btn-outline-primary">Account Details</a>
+                    <a href="{% url 'user_home' %}" class="btn btn-primary">Track Yourself!</a>
+                    <a href="{% url 'health' %}" class="btn btn-primary">Click me and you die :)</a>
+            </div>
+        </div>
+    </section>
+    {% else %}
     <section class="section mb-5">
         <div class="row">
             <div class="col-md-8 mx-auto">
@@ -30,25 +37,14 @@
                 </ul>
             </div>
         </div>
-    </section>
-
-    <section class="section mb-5">
-        <div class="row">
-            <div class="col-md-8 mx-auto text-center">
-                <h2>Get Started</h2>
-                {% if user.is_authenticated %}
-                    <p class="lead">Welcome back, {{ user.username }}!</p>
-                    <a href="{% url 'profile' %}" class="btn btn-outline-primary">Account Details</a>
-                    <a href="{% url 'user_home' %}" class="btn btn-primary">Your Health Info and Goals DaRealOne</a>
-                    <a href="{% url 'health' %}" class="btn btn-primary">Your Health Info and Goals</a>
-                {% else %}
-                    <p class="lead">Join us today and embark on your journey to a healthier lifestyle!</p>
-                    <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
-                    <p class="mt-3">Already have an account?</p>
-                    <a href="{% url 'login' %}" class="btn btn-outline-primary">Log In</a>
-                {% endif %}
-            </div>
+        <br><br><br><br>
+        <div class="col-md-8 mx-auto text-center">
+            <p class="lead">Join us today and embark on your journey to a healthier lifestyle!</p>
+            <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
+            <p class="mt-3">Already have an account?</p>
+            <a href="{% url 'login' %}" class="btn btn-outline-primary">Log In</a>
         </div>
     </section>
+    {% endif %}
 </main>
 {% endblock %}

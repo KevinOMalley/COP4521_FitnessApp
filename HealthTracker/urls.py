@@ -10,4 +10,7 @@ urlpatterns = [
     path('profile/', views.user_profile, name='profile'),
     path('health/', views.health_info, name='health'),
     path('user_home/', views.userHome, name='user_home'),
+    path('workout-tracker/', views.workoutTracker, name='workout-tracker'),
+    path('sleep-tracker/', views.sleepTracker, name='sleep-tracker'),
+    path('nutrition-tracker/', views.nutritionTracker, name='nutrition-tracker'),
 ]

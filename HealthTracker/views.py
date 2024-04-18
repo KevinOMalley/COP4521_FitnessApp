@@ -88,6 +88,33 @@ def userHome(request):
     return render(request, "HealthTracker/user_page/user_home.html", context)
 
 @login_required
+def workoutTracker(request):
+    user = request.user
+    account = Account.objects.get(username=user.username)
+    context = {
+        'account': account,
+    }
+    return render(request, "HealthTracker/user_page/tracker_pages/workout_tracker.html", context)
+
+@login_required
+def sleepTracker(request):
+    user = request.user
+    account = Account.objects.get(username=user.username)
+    context = {
+        'account': account,
+    }
+    return render(request, "HealthTracker/user_page/tracker_pages/sleep_tracker.html", context)
+
+@login_required
+def nutritionTracker(request):
+    user = request.user
+    account = Account.objects.get(username=user.username)
+    context = {
+        'account': account,
+    }
+    return render(request, "HealthTracker/user_page/tracker_pages/nutrition_tracker.html", context)
+
+@login_required
 def health_info(request):
     user = request.user
     user_instance = Account.objects.get(username = user.username)
