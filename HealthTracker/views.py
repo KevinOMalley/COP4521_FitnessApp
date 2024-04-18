@@ -139,4 +139,4 @@ def health_info(request):
         'health_info': health_info,
         'form': form,
     }
-    return render(request, 'HealthTracker/health_info.html', context)
+    return render(request, 'HealthTracker/user_page/tracker_pages/health_info.html', context)

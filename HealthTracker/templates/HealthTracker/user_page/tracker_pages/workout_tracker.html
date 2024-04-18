@@ -1,13 +1,17 @@
 {% extends 'HealthTracker/base.html' %}
 
 {% block content %}
-    <a href="{% url 'user_home' %}" class="btn btn-primary my-2">Back</a>
+<a href="{% url 'user_home' %}" class="btn btn-primary my-2">Back</a>
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8 mx-auto text-center">
             <div class="card">
                 <div class="card-header bg-primary text-white">
                     <h2>Workout Tracker</h2>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'workout-tracker' %}" class="btn btn-outline-primary">Record Workout</a>
+                    <a href="{% url 'workout-tracker' %}" class="btn btn-outline-primary">View Workouts</a>
                 </div>
             </div>
         </div>
