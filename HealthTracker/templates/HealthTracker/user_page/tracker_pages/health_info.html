@@ -1,6 +1,7 @@
 {% extends 'HealthTracker/base.html' %}
 
 {% block content %}
+<a href="{% url 'nutrition-tracker' %}" class="btn btn-primary my-2">Back</a>
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8 mx-auto">
@@ -12,7 +13,7 @@
                     {% if health_info %}
                         <p><strong>Weight:</strong> {{ health_info.weight }} kg</p>
                         <p><strong>Height:</strong> {{ health_info.height }} cm</p>
-{#                        <p><strong>Goals:</strong> {{ health_info.goals }}</p>#}
+                        <p><strong>Your Goals:</strong> {{ health_info.goals }}</p>
                     {% else %}
                         <h5 class="card-title">Enter Your Health Information</h5>
                         <form method="post">

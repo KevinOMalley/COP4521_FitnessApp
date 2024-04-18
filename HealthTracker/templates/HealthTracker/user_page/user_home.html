@@ -1,17 +1,23 @@
 {% extends 'HealthTracker/base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 mx-auto text-center"> <!-- Center the content -->
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h2>All Your Tracking Needs!</h2> <!-- Changed to h2 for consistency -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="mb-0">All Your Tracking Needs!</h2>
                 </div>
-                <div class="card-body">
-                    <a href="{% url 'workout-tracker' %}" class="btn btn-primary my-2">Workout Tracker</a>
-                    <a href="{% url 'nutrition-tracker' %}" class="btn btn-primary my-2">Nutrition Tracker</a>
-                    <a href="{% url 'sleep-tracker' %}" class="btn btn-primary my-2">Sleep Tracker</a>
+                <div class="card-body text-center">
+                    <a href="{% url 'workout-tracker' %}" class="btn btn-primary btn-lg my-2">
+                        <i class="fas fa-dumbbell me-2"></i>Workout Tracker
+                    </a>
+                    <a href="{% url 'nutrition-tracker' %}" class="btn btn-primary btn-lg my-2">
+                        <i class="fas fa-apple-alt me-2"></i>Nutrition Tracker
+                    </a>
+                    <a href="{% url 'sleep-tracker' %}" class="btn btn-primary btn-lg my-2">
+                        <i class="fas fa-bed me-2"></i>Sleep Tracker
+                    </a>
                 </div>
             </div>
         </div>
