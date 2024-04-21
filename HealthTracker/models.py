@@ -144,7 +144,7 @@ class Sleep(models.Model):
         ('energized', 'Energized')
     ))
     
-    def get_total_sleep_duartion(self):
+    def get_total_sleep_duration(self):
         if self.fell_asleep_approx and self.woke_up_at:
             sleep_duration = self.woke_up_at - self.fell_asleep_approx
             

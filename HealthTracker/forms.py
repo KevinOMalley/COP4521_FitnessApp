@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Account, UserHealthInfo
+from .models import Account, UserHealthInfo, Workout
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
@@ -25,3 +25,8 @@ class HealthInfoForm(forms.ModelForm):
     class Meta:
         model = UserHealthInfo
         fields = ('weight', 'height', 'goals')
+
+class RecordWorkoutForm(forms.ModelForm):
+    class Meta:
+        model = Workout
+        fields = ("activity_type", "duration", "kilometers", "miles", "rest_periods", "sets", "reps", "notes", "rating")

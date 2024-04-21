@@ -5,8 +5,8 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from HealthTracker.models import Account, UserHealthInfo, MyAccountManager
-from .forms import RegisterForm, AuthenticationForm, HealthInfoForm
+from HealthTracker.models import Account, UserHealthInfo, MyAccountManager, Workout
+from .forms import RegisterForm, AuthenticationForm, HealthInfoForm, RecordWorkoutForm
 
 def register_view(request, *args, **kwargs):
     user = request.user
@@ -137,7 +137,7 @@ def health_info(request):
             health_data = form.save(commit=False)
             health_data.username = user_instance
             health_data.save()
-            return redirect('index')  # Redirect to the same page after saving
+            return redirect('index')
     else:
         form = HealthInfoForm(instance=health_info)
 
@@ -146,3 +146,29 @@ def health_info(request):
         'form': form,
     }
     return render(request, 'HealthTracker/user_page/tracker_pages/health_info.html', context)
+
+
+@login_required
+def record_workout(request):
+    user = request.user
+    user_instance = Account.objects.get(id=user.id)
+    try:
+        record_workout = Workout.objects.get(id=user_instance.id)
+    except Workout.DoesNotExist:
+        record_workout = None
+
+    if request.method == 'POST':
+        form = HealthInfoForm(request.POST, instance=record_workout)
+        if form.is_valid():
+            workout_data = form.save(commit=False)
+            workout_data.id = user_instance.id
+            workout_data.save()
+            return redirect('index')
+    else:
+        form = RecordWorkoutForm(instance=record_workout)
+
+    context = {
+        'record_workout': record_workout,
+        'form': form,
+    }
+    return render(request, 'HealthTracker/user_page/tracker_pages/record-workout.html', context)

@@ -13,4 +13,5 @@ urlpatterns = [
     path('workout-tracker/', views.workoutTracker, name='workout-tracker'),
     path('sleep-tracker/', views.sleepTracker, name='sleep-tracker'),
     path('nutrition-tracker/', views.nutritionTracker, name='nutrition-tracker'),
+    path('record-workout', views.record_workout, name='record-workout'),
 ]
