@@ -79,7 +79,7 @@ class UserHealthInfo(models.Model):
     height = models.IntegerField()
     goals = models.TextField(null=True)
 
-class FoodEntry(models.Model):
+class Food(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     food_name = models.CharField(max_length=50)
     calories = models.IntegerField()

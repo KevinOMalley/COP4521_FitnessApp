@@ -5,8 +5,9 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from HealthTracker.models import Account, UserHealthInfo, MyAccountManager, Workout
-from .forms import RegisterForm, AuthenticationForm, HealthInfoForm, RecordWorkoutForm
+from HealthTracker.models import Account, UserHealthInfo, MyAccountManager, Workout, Food, Sleep
+from .forms import RegisterForm, AuthenticationForm, HealthInfoForm, RecordWorkoutForm, RecordFoodForm, RecordSleepForm
+
 
 def register_view(request, *args, **kwargs):
     user = request.user
@@ -137,7 +138,7 @@ def health_info(request):
             health_data = form.save(commit=False)
             health_data.username = user_instance
             health_data.save()
-            return redirect('index')
+            return redirect('nutrition-tracker')
     else:
         form = HealthInfoForm(instance=health_info)
 
@@ -158,12 +159,12 @@ def record_workout(request):
         record_workout = None
 
     if request.method == 'POST':
-        form = HealthInfoForm(request.POST, instance=record_workout)
+        form = RecordWorkoutForm(request.POST, instance=record_workout)
         if form.is_valid():
             workout_data = form.save(commit=False)
             workout_data.id = user_instance.id
             workout_data.save()
-            return redirect('index')
+            return redirect('workout-tracker')
     else:
         form = RecordWorkoutForm(instance=record_workout)
 
@@ -172,3 +173,53 @@ def record_workout(request):
         'form': form,
     }
     return render(request, 'HealthTracker/user_page/tracker_pages/record-workout.html', context)
+
+@login_required
+def record_food(request):
+    user = request.user
+    user_instance = Account.objects.get(id=user.id)
+    try:
+        record_food = Food.objects.get(id=user_instance.id)
+    except Workout.DoesNotExist:
+        record_food = None
+
+    if request.method == 'POST':
+        form = RecordFoodForm(request.POST, instance=record_food)
+        if form.is_valid():
+            food_data = form.save(commit=False)
+            food_data.id = user_instance.id
+            food_data.save()
+            return redirect('nutrition-tracker')
+    else:
+        form = RecordFoodForm(instance=record_food)
+
+    context = {
+        'record_food': record_food,
+        'form': form,
+    }
+    return render(request, 'HealthTracker/user_page/tracker_pages/record-food.html', context)
+
+@login_required
+def record_sleep(request):
+    user = request.user
+    user_instance = Account.objects.get(id=user.id)
+    try:
+        record_sleep = Sleep.objects.get(id=request.user.id)
+    except Workout.DoesNotExist:
+        record_sleep = None
+
+    if request.method == 'POST':
+        form = RecordSleepForm(request.POST, instance=record_sleep)
+        if form.is_valid():
+            sleep_data = form.save(commit=False)
+            sleep_data.id = user_instance.id
+            sleep_data.save()
+            return redirect('sleep-tracker')
+    else:
+        form = RecordSleepForm(instance=record_sleep)
+
+    context = {
+        'record_sleep': record_sleep,
+        'form': form,
+    }
+    return render(request, 'HealthTracker/user_page/tracker_pages/record-sleep.html', context)
