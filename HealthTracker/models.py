@@ -79,8 +79,8 @@ class UserHealthInfo(models.Model):
     height = models.IntegerField()
     goals = models.TextField(null=True)
 
-
-class FoodEntry(models.Model):
+class Food(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
     food_name = models.CharField(max_length=50)
     calories = models.IntegerField()
     date = models.DateField(auto_now_add=True)
@@ -91,11 +91,17 @@ class FoodEntry(models.Model):
         ('dinner', 'Dinner'),
         ('snack', 'Snack')
     ])
+    
+    '''
+    User can add notes about the food they had. 
+    -How they felt about it. More or less. Taste, etc.
+    -Nutritional facts that they would like to keep track of based on different diets
+    '''
     notes = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.food_name} - {self.calories} calories"
-        
+        return f"{self.food_name} - {self.calories} calories ({self.user.username})"
+    
     
 class Workout(models.Model):
     date = models.DateTimeField(auto_now_add = True)
@@ -151,3 +157,10 @@ class Sleep(models.Model):
     def __str__(self):
         return f"Slept on {self.date} for {self.total_sleep_duration}"
     
+    
+class Goals(models.Model):
+    # Weight Goal
+    # Step Goal
+    # Calorie Goal
+    # Sleep Goal
+    pass
