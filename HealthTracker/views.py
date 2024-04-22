@@ -5,7 +5,7 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from HealthTracker.models import Account, UserHealthInfo, MyAccountManager, Workout, Food, Sleep
+from HealthTracker.models import Account, UserHealthInfo, MyAccountManager, Workout, FoodEntry, Sleep
 from .forms import RegisterForm, AuthenticationForm, HealthInfoForm, RecordWorkoutForm, RecordFoodForm, RecordSleepForm
 
 
