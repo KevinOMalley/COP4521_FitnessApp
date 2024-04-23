@@ -1,0 +1,17 @@
+{% extends 'HealthTracker/base.html' %}
+
+{% block content %}
+  <a href="{% url 'nutrition-tracker' %}" class="btn btn-primary my-2">Back</a>
+  <h1>Your Food Records</h1>
+  <ul>
+    {% for food in foods %}
+      <li>
+        <p>Date: {{ food.date }}</p>
+        <p>Food Name: {{ food.food_name }}</p>
+        <p>Calories: {{ food.calories }}</p>
+        <p>Meal Type: {{ food.meal_type }}</p>
+        <p>Notes: {{ food.notes }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
