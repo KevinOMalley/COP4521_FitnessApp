@@ -79,12 +79,33 @@ class UserHealthInfo(models.Model):
     height = models.IntegerField()
     goals = models.TextField(null=True)
 
+
+'''
 class Food(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     food_name = models.CharField(max_length=50)
     calories = models.IntegerField()
     date = models.DateField(auto_now_add=True)
     meal_type = models.CharField(max_length=20, choices=[
+        ('breakfast', 'Breakfast'),
+        ('brunch', 'Brunch'),
+        ('lunch', 'Lunch'),
+        ('dinner', 'Dinner'),
+        ('snack', 'Snack')
+    ])
+    
+    notes = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.food_name} - {self.calories} calories ({self.user.username})"
+'''  
+    
+class Nutrition(models.Model):
+    food_name = models.CharField(max_length=50)
+    calories = models.IntegerField()
+    date = models.DateField(auto_now_add=True)
+    meal_type = models.CharField(max_length=20, default=' ', choices=[
+        (' ', ' '),
         ('breakfast', 'Breakfast'),
         ('brunch', 'Brunch'),
         ('lunch', 'Lunch'),
@@ -100,8 +121,8 @@ class Food(models.Model):
     notes = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.food_name} - {self.calories} calories ({self.user.username})"
-    
+        return f"{self.food_name} - {self.calories} calories"
+      
     
 class Workout(models.Model):
     date = models.DateTimeField(auto_now_add = True)
@@ -136,7 +157,8 @@ class Sleep(models.Model):
     woke_up_at = models.TimeField()
     total_sleep_duration = models.DurationField(null=True, blank=True)
     notes = models.TextField(blank=True, max_length=200)
-    sleep_quality = models.CharField(max_length=30, default='', choices= (
+    sleep_quality = models.CharField(max_length=30, default=' ', choices= (
+        (' ', ' '),
         ('exhausted', 'Exhausted'),
         ('tired', 'Tired'),
         ('groggy', 'Groggy'),

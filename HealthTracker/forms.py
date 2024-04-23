@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Account, UserHealthInfo, Workout, Food, Sleep
+from .models import Account, UserHealthInfo, Workout, Nutrition, Sleep
 
 
 class LoginForm(forms.Form):
@@ -34,7 +34,7 @@ class RecordWorkoutForm(forms.ModelForm):
 
 class RecordFoodForm(forms.ModelForm):
     class Meta:
-        model = Food
+        model =  Nutrition
         fields = ("food_name", "calories", "meal_type", "notes")
 
 class RecordSleepForm(forms.ModelForm):

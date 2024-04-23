@@ -5,7 +5,7 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from HealthTracker.models import Account, UserHealthInfo, MyAccountManager, Workout, Food, Sleep
+from HealthTracker.models import Account, UserHealthInfo, MyAccountManager, Workout, Nutrition, Sleep
 from .forms import RegisterForm, AuthenticationForm, HealthInfoForm, RecordWorkoutForm, RecordFoodForm, RecordSleepForm
 
 
@@ -179,8 +179,8 @@ def record_food(request):
     user = request.user
     user_instance = Account.objects.get(id=user.id)
     try:
-        record_food = Food.objects.get(id=user_instance.id)
-    except Workout.DoesNotExist:
+        record_food = Nutrition.objects.get(id=user_instance.id)
+    except Nutrition.DoesNotExist:
         record_food = None
 
     if request.method == 'POST':
@@ -205,7 +205,7 @@ def record_sleep(request):
     user_instance = Account.objects.get(id=user.id)
     try:
         record_sleep = Sleep.objects.get(id=request.user.id)
-    except Workout.DoesNotExist:
+    except Sleep.DoesNotExist:
         record_sleep = None
 
     if request.method == 'POST':
