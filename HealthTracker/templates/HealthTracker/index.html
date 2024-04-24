@@ -7,20 +7,22 @@
     <section class="section mb-5">
         <div class="row">
             <div class="col-md-8 mx-auto text-center">
-                <h2>Welcome to Health Tracker</h2>
+                <h2 class="display-4">Welcome to Health Tracker</h2>
                 <p class="lead">Monitor and improve your health with our easy-to-use tracking application.</p>
             </div>
         </div>
     </section>
 
+    <hr>  {# This is the horizontal line separator #}
+
     {% if user.is_authenticated %}
     <section class="section mb-5">
         <div class="row">
             <div class="col-md-8 mx-auto text-center">
-                <h2>Get Started</h2>
-                    <p class="lead">Welcome back, {{ user.username }}!</p>
-                    <a href="{% url 'profile' %}" class="btn btn-outline-primary">Account Details</a>
-                    <a href="{% url 'user_home' %}" class="btn btn-primary">Track Yourself</a>
+                <h2 class="display-5">Get Started</h2>
+                <p class="lead">Welcome back, {{ user.username }}!</p>
+                <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-lg px-4">Account Details</a>
+                <a href="{% url 'user_home' %}" class="btn btn-primary btn-lg px-4">Track Yourself</a>
             </div>
         </div>
     </section>
@@ -28,8 +30,8 @@
     <section class="section mb-5">
         <div class="row">
             <div class="col-md-8 mx-auto text-center">
-                <h2>Features</h2>
-                <ul class="list-unstyled">
+                <h2 class="display-5">Features</h2>
+                <ul class="list-unstyled lead">
                     <li><i class="fas fa-check text-primary me-2"></i>Track your daily nutrition and exercise habits</li>
                     <li><i class="fas fa-check text-primary me-2"></i>Set and achieve personal health goals</li>
                     <li><i class="fas fa-check text-primary me-2"></i>Gain insights with detailed reports</li>
@@ -39,9 +41,9 @@
         <br><br><br><br>
         <div class="col-md-8 mx-auto text-center">
             <p class="lead">Join us today and embark on your journey to a healthier lifestyle!</p>
-            <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
+            <a href="{% url 'register' %}" class="btn btn-primary btn-lg px-4">Register</a>
             <p class="mt-3">Already have an account?</p>
-            <a href="{% url 'login' %}" class="btn btn-outline-primary">Log In</a>
+            <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg px-4">Log In</a>
         </div>
     </section>
     {% endif %}
