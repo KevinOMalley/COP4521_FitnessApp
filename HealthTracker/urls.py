@@ -16,4 +16,7 @@ urlpatterns = [
     path('record-workout', views.record_workout, name='record-workout'),
     path('record-food', views.record_food, name='record-food'),
     path('record-sleep', views.record_sleep, name='record-sleep'),
+    path('display-workout', views.display_workout, name='display-workout'),
+    path('display-sleep', views.display_sleep, name='display-sleep'),
+    path('display-food', views.display_food, name='display-food'),
 ]

@@ -223,3 +223,34 @@ def record_sleep(request):
         'form': form,
     }
     return render(request, 'HealthTracker/user_page/tracker_pages/record-sleep.html', context)
+
+
+@login_required
+def display_workout(request):
+    user = request.user
+    account = Account.objects.get(username=user.username)
+    workouts = Workout.objects.filter(id=account.id)
+    context = {
+        'workouts': workouts
+    }
+    return render(request, 'HealthTracker/user_page/tracker_pages/display-workout.html', context)
+
+@login_required
+def display_food(request):
+    user = request.user
+    account = Account.objects.get(username=user.username)
+    foods = Food.objects.filter(id=account.id)
+    context = {
+        'foods': foods
+    }
+    return render(request, 'HealthTracker/user_page/tracker_pages/display-food.html', context)
+
+@login_required
+def display_sleep(request):
+    user = request.user
+    account = Account.objects.get(username=user.username)
+    sleeps = Sleep.objects.filter(id=account.id)
+    context = {
+        'sleeps': sleeps
+    }
+    return render(request, 'HealthTracker/user_page/tracker_pages/display-sleep.html', context)

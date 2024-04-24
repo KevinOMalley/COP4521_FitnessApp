@@ -1,25 +1,32 @@
 {% extends 'HealthTracker/base.html' %}
+{% load static %}
 
 {% block content %}
-<a href="{% url 'nutrition-tracker' %}" class="btn btn-primary my-2">Back</a>
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h4>Health Information</h4>
+<div class="container my-5">
+    <a href="{% url 'nutrition-tracker' %}" class="btn btn-primary mb-4">Back</a>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white text-center py-3 rounded-top">
+                    <h4 class="mb-0">Health Information</h4>
                 </div>
                 <div class="card-body">
                     {% if health_info %}
-                        <p><strong>Weight:</strong> {{ health_info.weight }} kg</p>
-                        <p><strong>Height:</strong> {{ health_info.height }} cm</p>
-                        <p><strong>Your Goals:</strong> {{ health_info.goals }}</p>
+                        <div class="mb-4">
+                            <p class="mb-2"><strong>Weight:</strong> {{ health_info.weight }} kg</p>
+                            <p class="mb-2"><strong>Height:</strong> {{ health_info.height }} cm</p>
+                            <p class="mb-0"><strong>Your Goals:</strong> {{ health_info.goals }}</p>
+                        </div>
                     {% else %}
-                        <h5 class="card-title">Enter Your Health Information</h5>
+                        <h5 class="card-title mb-4 text-center">Enter Your Health Information</h5>
                         <form method="post">
                             {% csrf_token %}
-                            {{ form.as_p }}
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <div class="form-group mb-4">
+                                {{ form.as_p }}
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary px-4">Save</button>
+                            </div>
                         </form>
                     {% endif %}
                 </div>
