@@ -1,5 +1,4 @@
 {% extends 'HealthTracker/base.html' %}
-{% load static %}
 
 {% block content %}
   <div class="container my-5">
@@ -9,12 +8,12 @@
     <div class="row justify-content-center">
       {% for sleep in sleeps %}
         <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card h-100 shadow-sm">
+          <div class="card h-100 shadow">
             <div class="card-body">
-              <h5 class="card-title text-center mb-3">Sleep Record</h5>
-              <p class="card-text mb-2"><strong>Date:</strong> {{ sleep.date }}</p>
-              <p class="card-text mb-2"><strong>Fell Asleep Approx:</strong> {{ sleep.fell_asleep_approx }}</p>
+              <h5 class="card-title text-center mb-3">{{ sleep.date }}</h5>
+              <p class="card-text mb-2"><strong>Fell Asleep At:</strong> {{ sleep.fell_asleep_approx }}</p>
               <p class="card-text mb-2"><strong>Woke Up At:</strong> {{ sleep.woke_up_at }}</p>
+              <p class="card-text mb-2"><strong>Total Sleep Duration:</strong> {{ sleep.total_sleep_duration }}</p>
               <p class="card-text mb-2"><strong>Notes:</strong> {{ sleep.notes }}</p>
               <p class="card-text mb-0"><strong>Sleep Quality:</strong> {{ sleep.sleep_quality }}</p>
             </div>

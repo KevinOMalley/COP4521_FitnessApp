@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Account, UserHealthInfo, Workout, Nutrition, Sleep
+from .models import Account, UserHealthInfo, WorkoutEntry, Nutrition, Sleep
 from datetime import time, datetime, timedelta
 
 class LoginForm(forms.Form):
@@ -29,7 +29,7 @@ class HealthInfoForm(forms.ModelForm):
 
 class RecordWorkoutForm(forms.ModelForm):
     class Meta:
-        model = Workout
+        model = WorkoutEntry
         fields = ("activity_type", "duration", "kilometers", "miles", "rest_periods", "sets", "reps", "notes", "rating")
 
 class RecordSleepForm(forms.ModelForm):

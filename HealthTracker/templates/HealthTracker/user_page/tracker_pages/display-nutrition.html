@@ -8,12 +8,13 @@
     <div class="row justify-content-center">
       {% for nutrition in nutritions %}
         <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card h-100 shadow-sm">
+          <div class="card h-100 shadow">
             <div class="card-body">
               <h5 class="card-title text-center mb-3">{{ nutrition.food_name }}</h5>
+              <p class="card-text mb-2"><strong>Date:</strong> {{ nutrition.date }}</p>
               <p class="card-text mb-2"><strong>Calories:</strong> {{ nutrition.calories }}</p>
               <p class="card-text mb-2"><strong>Meal Type:</strong> {{ nutrition.meal_type }}</p>
-              <p class="card-text mb-2"><strong>Notes:</strong> {{ nutrition.notes }}</p>
+              <p class="card-text mb-0"><strong>Notes:</strong> {{ nutrition.notes }}</p>
             </div>
           </div>
         </div>

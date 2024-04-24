@@ -5,7 +5,7 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from HealthTracker.models import Account, UserHealthInfo, MyAccountManager, Workout, Nutrition, Sleep
+from HealthTracker.models import Account, UserHealthInfo, MyAccountManager, WorkoutEntry, Nutrition, Sleep
 from .forms import RegisterForm, AuthenticationForm, HealthInfoForm, RecordWorkoutForm, RecordSleepForm, \
     RecordNutritionForm
 
@@ -153,24 +153,23 @@ def health_info(request):
 @login_required
 def record_workout(request):
     user = request.user
-    user_instance = Account.objects.get(id=user.id)
     try:
-        record_workout = Workout.objects.get(id=user_instance.id)
-    except Workout.DoesNotExist:
-        record_workout = None
+        user_instance = Account.objects.get(id=user.id)
+    except Account.DoesNotExist:
+        # Handle the case where the user doesn't exist
+        return HttpResponse("User not found")
 
     if request.method == 'POST':
-        form = RecordWorkoutForm(request.POST, instance=record_workout)
+        form = RecordWorkoutForm(request.POST)
         if form.is_valid():
             workout_data = form.save(commit=False)
-            workout_data.id = user_instance.id
+            workout_data.username = user_instance  # Associate the workout with the user
             workout_data.save()
             return redirect('workout-tracker')
     else:
-        form = RecordWorkoutForm(instance=record_workout)
+        form = RecordWorkoutForm()
 
     context = {
-        'record_workout': record_workout,
         'form': form,
     }
     return render(request, 'HealthTracker/user_page/tracker_pages/record-workout.html', context)
@@ -183,7 +182,7 @@ def record_sleep(request):
         form = RecordSleepForm(request.POST)
         if form.is_valid():
             sleep = form.save(commit=False)
-            sleep.id = user_instance.id  # Associate the Sleep instance with the current user's id
+            sleep.user = user_instance  # Associate the Sleep instance with the current user
             # sleep.total_sleep_duration = sleep.get_total_sleep_duration()
             print("Sleep instance created:", sleep)  # Debugging line
             sleep.save()
@@ -203,7 +202,7 @@ def record_nutrition(request):
         form = RecordNutritionForm(request.POST)
         if form.is_valid():
             nutrition = form.save(commit=False)
-            nutrition.id = user_instance.id  # Associate the Nutrition instance with the current user's id
+            nutrition.user = user_instance  # Associate the Nutrition instance with the current user
             nutrition.save()
             return redirect('nutrition-tracker')
         else:
@@ -212,30 +211,20 @@ def record_nutrition(request):
         form = RecordNutritionForm()
     return render(request, 'HealthTracker/user_page/tracker_pages/record-nutrition.html', {'form': form})
 
-
 @login_required
 def display_workout(request):
     user = request.user
-    account = Account.objects.get(username=user.username)
-    workouts = Workout.objects.filter(id=account.id)
-    context = {
-        'workouts': workouts
-    }
-    return render(request, 'HealthTracker/user_page/tracker_pages/display-workout.html', context)
+    workouts = WorkoutEntry.objects.filter(username=user)
+    return render(request, 'HealthTracker/user_page/tracker_pages/display-workout.html', {'workouts': workouts})
 
 @login_required
 def display_sleep(request):
     user = request.user
-    user_instance = Account.objects.get(id=user.id)
-    sleeps = Sleep.objects.filter(id=user_instance.id)  # Retrieve sleep records associated with the current user's id
-    context = {
-        'sleeps': sleeps
-    }
-    return render(request, 'HealthTracker/user_page/tracker_pages/display-sleep.html', context)
+    sleeps = Sleep.objects.filter(user=user)
+    return render(request, 'HealthTracker/user_page/tracker_pages/display-sleep.html', {'sleeps': sleeps})
 
 @login_required
 def display_nutrition(request):
     user = request.user
-    user_instance = Account.objects.get(id=user.id)
-    nutritions = Nutrition.objects.filter(id=user_instance.id)
+    nutritions = Nutrition.objects.filter(user=user)
     return render(request, 'HealthTracker/user_page/tracker_pages/display-nutrition.html', {'nutritions': nutritions})
