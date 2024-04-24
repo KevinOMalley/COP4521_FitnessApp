@@ -182,7 +182,7 @@ def record_sleep(request):
         form = RecordSleepForm(request.POST)
         if form.is_valid():
             sleep = form.save(commit=False)
-            sleep.id = user_instance.id  # Associate the Sleep instance with the current user's id
+            sleep.user = user_instance  # Associate the Sleep instance with the current user
             # sleep.total_sleep_duration = sleep.get_total_sleep_duration()
             print("Sleep instance created:", sleep)  # Debugging line
             sleep.save()
@@ -202,7 +202,7 @@ def record_nutrition(request):
         form = RecordNutritionForm(request.POST)
         if form.is_valid():
             nutrition = form.save(commit=False)
-            nutrition.user = user_instance  # Associate the Nutrition instance with the current user's id
+            nutrition.user = user_instance  # Associate the Nutrition instance with the current user
             nutrition.save()
             return redirect('nutrition-tracker')
         else:
@@ -210,17 +210,6 @@ def record_nutrition(request):
     else:
         form = RecordNutritionForm()
     return render(request, 'HealthTracker/user_page/tracker_pages/record-nutrition.html', {'form': form})
-
-
-# @login_required
-# def display_workout(request):
-#     user = request.user
-#     account = Account.objects.get(username=user.username)
-#     workouts = WorkoutEntry.objects.filter(id=account.id)
-#     context = {
-#        'workouts': workouts
-#     }
-#     return render(request, 'HealthTracker/user_page/tracker_pages/display-workout.html', context)
 
 @login_required
 def display_workout(request):
@@ -231,16 +220,11 @@ def display_workout(request):
 @login_required
 def display_sleep(request):
     user = request.user
-    user_instance = Account.objects.get(id=user.id)
-    sleeps = Sleep.objects.filter(id=user_instance.id)  # Retrieve sleep records associated with the current user's id
-    context = {
-        'sleeps': sleeps
-    }
-    return render(request, 'HealthTracker/user_page/tracker_pages/display-sleep.html', context)
+    sleeps = Sleep.objects.filter(user=user)
+    return render(request, 'HealthTracker/user_page/tracker_pages/display-sleep.html', {'sleeps': sleeps})
 
 @login_required
 def display_nutrition(request):
     user = request.user
-    user_instance = Account.objects.get(id=user.id)
-    nutritions = Nutrition.objects.filter(id=user_instance.id)
+    nutritions = Nutrition.objects.filter(user=user)
     return render(request, 'HealthTracker/user_page/tracker_pages/display-nutrition.html', {'nutritions': nutritions})
