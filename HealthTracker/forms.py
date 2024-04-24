@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Account, UserHealthInfo, WorkoutEntry, Nutrition, Sleep
 from datetime import time, datetime, timedelta
+from . import calculate
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
@@ -58,9 +59,12 @@ class RecordSleepForm(forms.ModelForm):
         sleep_quality = self.cleaned_data['sleep_quality']
         notes = self.cleaned_data['notes']
 
+        sleep_hour, sleep_min = calculate.sleep_calc(fell_asleep_approx_hour, fell_asleep_approx_minute, woke_up_at_hour, woke_up_at_minute)
+
         # Set the instance values
         instance.fell_asleep_approx = time(fell_asleep_approx_hour, fell_asleep_approx_minute)
         instance.woke_up_at = time(woke_up_at_hour, woke_up_at_minute)
+        instance.total_sleep_duration = timedelta(hours=sleep_hour, minutes=sleep_min)
         instance.sleep_quality = sleep_quality
         instance.notes = notes
 

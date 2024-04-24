@@ -1,3 +1,5 @@
+from datetime import timedelta
+from datetime import datetime
 # Contains functions to calculate calories and other health-related things
 # I tried to avoid using MET (Metabolic Equivalent of Task) values in the calculations as it's kind of a pain for a person to have to calculate what their MET is for each exercise.
 
@@ -151,3 +153,19 @@ def jumpingjack_to_calories(jumpingjack_flt, weight_kg_flt):
 # Takes in a number of shoulder-shrugs as a float and a person's weight in kilograms as a float and converts it to Calories(kcal) burnt as a float
 def shrug_to_calories(shrug_flt, weight_kg_flt):
     return ((.03) * (shrug_flt))  # Moderate Intensity (.02 - .04)
+
+
+def sleep_calc(fell_asleep_hour, fell_asleep_min, woke_up_hour, woke_up_min):
+
+  # Calculate the total minutes slept
+  total_minutes = (woke_up_hour - fell_asleep_hour) * 60 + (woke_up_min - fell_asleep_min)
+
+  # Handle cases where sleep goes past midnight
+  if total_minutes < 0:
+    total_minutes += 24 * 60
+
+  # Extract hours and minutes from the total minutes
+  hours = total_minutes // 60
+  minutes = total_minutes % 60
+
+  return hours, minutes

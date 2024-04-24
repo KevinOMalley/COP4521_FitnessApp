@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from HealthTracker.models import Account, UserHealthInfo, MyAccountManager, WorkoutEntry, Nutrition, Sleep
 from .forms import RegisterForm, AuthenticationForm, HealthInfoForm, RecordWorkoutForm, RecordSleepForm, \
     RecordNutritionForm
-
+from . import calculate
 
 def register_view(request, *args, **kwargs):
     user = request.user
@@ -182,11 +182,8 @@ def record_sleep(request):
         form = RecordSleepForm(request.POST)
         if form.is_valid():
             sleep = form.save(commit=False)
-            sleep.user = user_instance  # Associate the Sleep instance with the current user
-            # sleep.total_sleep_duration = sleep.get_total_sleep_duration()
-            print("Sleep instance created:", sleep)  # Debugging line
+            sleep.user = user_instance  # Associate the Sleep instance with the current use
             sleep.save()
-            print("Sleep instance saved:", sleep)  # Debugging line
             return redirect('sleep-tracker')
         else:
             print("Form is not valid:", form.errors)  # Debugging line
