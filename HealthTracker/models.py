@@ -165,17 +165,17 @@ class Sleep(models.Model):
         ('rested', 'Rested'),
         ('energized', 'Energized')
     ))
-    
-    def get_total_sleep_duration(self):
-        if self.fell_asleep_approx and self.woke_up_at:
-            sleep_duration = self.woke_up_at - self.fell_asleep_approx
-            
-            if sleep_duration.total_seconds() < 0:
-                sleep_duration += timedelta(days=1)
-            self.total_sleep_duration = sleep_duration
-        return self.total_sleep_duration
-            
-            
+
+    # def get_total_sleep_duration(self): # TODO: Move to calculate.py, this file should only be for models
+    #     if self.fell_asleep_approx and self.woke_up_at:
+    #         sleep_duration = self.woke_up_at - self.fell_asleep_approx
+    #
+    #         if sleep_duration.total_seconds() < 0:
+    #             sleep_duration += timedelta(days=1)
+    #         self.total_sleep_duration = sleep_duration
+    #     return self.total_sleep_duration
+
+
     def __str__(self):
         return f"Slept on {self.date} for {self.total_sleep_duration}"
     

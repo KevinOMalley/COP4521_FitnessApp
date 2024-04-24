@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Account, UserHealthInfo, Workout, Nutrition, Sleep
-
+from datetime import time, datetime, timedelta
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
@@ -37,7 +37,36 @@ class RecordFoodForm(forms.ModelForm):
         model =  Nutrition
         fields = ("food_name", "calories", "meal_type", "notes")
 
+# class RecordSleepForm(forms.ModelForm):
+#     class Meta:
+#         model = Sleep
+#         fields = ("fell_asleep_approx", "woke_up_at", "sleep_quality", "notes")
+
 class RecordSleepForm(forms.ModelForm):
+    HOURS = [(str(i), '{:02d}'.format(i)) for i in range(24)]
+    MINUTES = [(str(i), '{:02d}'.format(i)) for i in range(60)]
+
+    fell_asleep_approx_hour = forms.ChoiceField(choices=HOURS)
+    fell_asleep_approx_minute = forms.ChoiceField(choices=MINUTES)
+    woke_up_at_hour = forms.ChoiceField(choices=HOURS)
+    woke_up_at_minute = forms.ChoiceField(choices=MINUTES)
+
     class Meta:
         model = Sleep
-        fields = ("fell_asleep_approx", "woke_up_at", "total_sleep_duration", "sleep_quality", "notes")
+        fields = (
+        "fell_asleep_approx_hour", "fell_asleep_approx_minute", "woke_up_at_hour", "woke_up_at_minute", "sleep_quality",
+        "notes")
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+
+        # Set all values to some default values for testing
+        instance.fell_asleep_approx = time(22, 0)  # 10 PM
+        instance.woke_up_at = time(6, 0)  # 6 AM
+        instance.total_sleep_duration = timedelta(hours=8)  # 8 hours
+        instance.sleep_quality = 'rested'
+        instance.notes = 'Test note'
+
+        if commit:
+            instance.save()
+        return instance

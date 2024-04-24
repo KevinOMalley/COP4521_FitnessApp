@@ -199,30 +199,41 @@ def record_food(request):
     }
     return render(request, 'HealthTracker/user_page/tracker_pages/record-food.html', context)
 
+# @login_required
+# def record_sleep(request):
+#     user = request.user
+#     user_instance = Account.objects.get(id=user.id)
+#     if request.method == 'POST':
+#         form = RecordSleepForm(request.POST)
+#         if form.is_valid():
+#             sleep = form.save(commit=False)
+#             sleep.user = user_instance
+#             sleep.total_sleep_duration = sleep.get_total_sleep_duration()
+#             sleep.save()
+#             return redirect('sleep-tracker')
+#     else:
+#         form = RecordSleepForm()
+#     return render(request, 'HealthTracker/user_page/tracker_pages/record-sleep.html', {'form': form})
+
 @login_required
 def record_sleep(request):
     user = request.user
     user_instance = Account.objects.get(id=user.id)
-    try:
-        record_sleep = Sleep.objects.get(id=request.user.id)
-    except Sleep.DoesNotExist:
-        record_sleep = None
-
     if request.method == 'POST':
-        form = RecordSleepForm(request.POST, instance=record_sleep)
+        form = RecordSleepForm(request.POST)
         if form.is_valid():
-            sleep_data = form.save(commit=False)
-            sleep_data.id = user_instance.id
-            sleep_data.save()
+            sleep = form.save(commit=False)
+            sleep.user = user_instance  # Associate the Sleep instance with the current user
+            # sleep.total_sleep_duration = sleep.get_total_sleep_duration()
+            print("Sleep instance created:", sleep)  # Debugging line
+            sleep.save()
+            print("Sleep instance saved:", sleep)  # Debugging line
             return redirect('sleep-tracker')
+        else:
+            print("Form is not valid:", form.errors)  # Debugging line
     else:
-        form = RecordSleepForm(instance=record_sleep)
-
-    context = {
-        'record_sleep': record_sleep,
-        'form': form,
-    }
-    return render(request, 'HealthTracker/user_page/tracker_pages/record-sleep.html', context)
+        form = RecordSleepForm()
+    return render(request, 'HealthTracker/user_page/tracker_pages/record-sleep.html', {'form': form})
 
 
 @login_required
