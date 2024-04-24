@@ -1,5 +1,4 @@
 {% extends 'HealthTracker/base.html' %}
-{% load static %}
 
 {% block content %}
   <div class="container my-5">
@@ -19,6 +18,7 @@
               <p class="card-text mb-2"><strong>Rest Periods:</strong> {{ workout.rest_periods }}</p>
               <p class="card-text mb-2"><strong>Sets:</strong> {{ workout.sets }}</p>
               <p class="card-text mb-2"><strong>Reps:</strong> {{ workout.reps }}</p>
+              <p class="card-text mb-2"><strong>Calories Burned:</strong> {{ workout.calories_burned }}</p>
               <p class="card-text mb-2"><strong>Notes:</strong> {{ workout.notes }}</p>
               <p class="card-text mb-0"><strong>Rating:</strong> {{ workout.rating }}</p>
             </div>

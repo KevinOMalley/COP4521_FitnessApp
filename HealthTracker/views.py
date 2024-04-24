@@ -212,15 +212,21 @@ def record_nutrition(request):
     return render(request, 'HealthTracker/user_page/tracker_pages/record-nutrition.html', {'form': form})
 
 
+# @login_required
+# def display_workout(request):
+#     user = request.user
+#     account = Account.objects.get(username=user.username)
+#     workouts = WorkoutEntry.objects.filter(id=account.id)
+#     context = {
+#        'workouts': workouts
+#     }
+#     return render(request, 'HealthTracker/user_page/tracker_pages/display-workout.html', context)
+
 @login_required
 def display_workout(request):
     user = request.user
-    account = Account.objects.get(username=user.username)
-    workouts = WorkoutEntry.objects.filter(id=account.id)
-    context = {
-       'workouts': workouts
-    }
-    return render(request, 'HealthTracker/user_page/tracker_pages/display-workout.html', context)
+    workouts = WorkoutEntry.objects.filter(username=user)
+    return render(request, 'HealthTracker/user_page/tracker_pages/display-workout.html', {'workouts': workouts})
 
 @login_required
 def display_sleep(request):
