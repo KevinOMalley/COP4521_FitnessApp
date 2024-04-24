@@ -113,6 +113,7 @@ class WorkoutEntry(models.Model): # TODO: Implement calculations
     rest_periods = models.IntegerField(default=0)
     sets = models.IntegerField(default=0)
     reps = models.IntegerField(default=0)
+    calories_burned = models.IntegerField(default=0)
     notes = models.TextField(blank=True, max_length=200)
     rating = models.CharField(max_length=20, choices = (
         ('easy', 'Easy'),
