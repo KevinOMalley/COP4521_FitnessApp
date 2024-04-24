@@ -1,5 +1,7 @@
 {% extends 'HealthTracker/base.html' %}
 
+{% load static %}
+
 {% block content %}
 <a href="{% url 'user_home' %}" class="btn btn-primary my-2">Back</a>
 <div class="container mt-5">
@@ -15,6 +17,10 @@
                 </div>
             </div>
         </div>
+    </div>
+    <br><br>
+    <div class="text-center">
+        <img src="{% static 'HealthTracker/images/spongelifter.jpg' %}" alt="Spongebob Is Ripped" class="img-fluid mb-3 bigger-image">
     </div>
 </div>
 {% endblock %}

@@ -28,6 +28,19 @@
             border-color: #494141 !important;
         }
 
+        .smaller-image {
+            width: 60px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 10px; /* Add this line */
+        }
+
+        .bigger-image {
+            width: 150px;
+            height: auto;
+        }
+
         .text-primary {
             color: #d16535 !important;
         }
@@ -42,18 +55,19 @@
         }
 
         html, body {
-        height: 100%;
-        margin: 0;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
         }
         .content {
-        min-height: 100%;
+            min-height: 100%;
         }
 
         footer { /* put footer to bottom of page*/
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 60px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
         }
 
         .btn-primary {
@@ -79,9 +93,12 @@
 </head>
 <body>
 
+{% load static %}
+
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
+        <img src="{% static 'HealthTracker/images/sponge_ripped.png' %}" alt="Spongebob Is Ripped" class="img-fluid mb-3 smaller-image">
         <a class="navbar-brand" href="{% url 'index' %}">Health Tracker</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

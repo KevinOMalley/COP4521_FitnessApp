@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path("",views.index, name="index"),
@@ -20,3 +21,5 @@ urlpatterns = [
     path('display-sleep', views.display_sleep, name='display-sleep'),
     path('display-nutrition', views.display_nutrition, name='display-nutrition'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

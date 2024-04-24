@@ -21,9 +21,9 @@
                             <button id="updateButton" class="btn btn-primary px-4">Update</button>
                         </div>
                     {% endif %}
-                    <div id="updateForm" style="display: none;">
+                    <div id="updateForm" style="{% if health_info %}display: none;{% else %}display: block;{% endif %}">
                         <br><br>
-                        <h5 class="card-title mb-4 text-center">Update Your Health Information</h5>
+                        <h5 class="card-title mb-4 text-center">Add Your Health Information</h5>
                         <form method="post">
                             {% csrf_token %}
                             <div class="form-group mb-4">
