@@ -166,7 +166,7 @@ class Sleep(models.Model):
         ('energized', 'Energized')
     ))
 
-    # def get_total_sleep_duration(self): # TODO: Move to calculate.py, this file should only be for models
+    # def get_total_sleep_duration(self): # TODO: Move to calculate.py, this file should only be for models also doesn't work
     #     if self.fell_asleep_approx and self.woke_up_at:
     #         sleep_duration = self.woke_up_at - self.fell_asleep_approx
     #

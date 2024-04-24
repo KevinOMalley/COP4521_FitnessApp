@@ -14,9 +14,9 @@ urlpatterns = [
     path('sleep-tracker/', views.sleepTracker, name='sleep-tracker'),
     path('nutrition-tracker/', views.nutritionTracker, name='nutrition-tracker'),
     path('record-workout', views.record_workout, name='record-workout'),
-    path('record-food', views.record_food, name='record-food'),
+    path('record-nutrition', views.record_nutrition, name='record-nutrition'),
     path('record-sleep', views.record_sleep, name='record-sleep'),
     path('display-workout', views.display_workout, name='display-workout'),
     path('display-sleep', views.display_sleep, name='display-sleep'),
-    path('display-food', views.display_food, name='display-food'),
+    path('display-nutrition', views.display_nutrition, name='display-nutrition'),
 ]

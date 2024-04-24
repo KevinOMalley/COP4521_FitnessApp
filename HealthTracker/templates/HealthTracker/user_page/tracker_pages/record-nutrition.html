@@ -1,0 +1,30 @@
+{% extends 'HealthTracker/base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h1 class="my-4">Record Nutrition</h1>
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            {{ form.food_name.label_tag }} {{ form.food_name }}
+          </div>
+          <div class="form-group">
+            {{ form.calories.label_tag }} {{ form.calories }}
+          </div>
+          <div class="form-group">
+            {{ form.date.label_tag }} {{ form.date }}
+          </div>
+          <div class="form-group">
+            {{ form.meal_type.label_tag }} {{ form.meal_type }}
+          </div>
+          <div class="form-group">
+            {{ form.notes.label_tag }} {{ form.notes }}
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

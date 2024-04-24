@@ -32,16 +32,6 @@ class RecordWorkoutForm(forms.ModelForm):
         model = Workout
         fields = ("activity_type", "duration", "kilometers", "miles", "rest_periods", "sets", "reps", "notes", "rating")
 
-class RecordFoodForm(forms.ModelForm):
-    class Meta:
-        model =  Nutrition
-        fields = ("food_name", "calories", "meal_type", "notes")
-
-# class RecordSleepForm(forms.ModelForm):
-#     class Meta:
-#         model = Sleep
-#         fields = ("fell_asleep_approx", "woke_up_at", "sleep_quality", "notes")
-
 class RecordSleepForm(forms.ModelForm):
     HOURS = [(str(i), '{:02d}'.format(i)) for i in range(24)]
     MINUTES = [(str(i), '{:02d}'.format(i)) for i in range(60)]
@@ -60,13 +50,25 @@ class RecordSleepForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super().save(commit=False)
 
-        # Set all values to some default values for testing
-        instance.fell_asleep_approx = time(22, 0)  # 10 PM
-        instance.woke_up_at = time(6, 0)  # 6 AM
-        instance.total_sleep_duration = timedelta(hours=8)  # 8 hours
-        instance.sleep_quality = 'rested'
-        instance.notes = 'Test note'
+        # Get the values from the form fields
+        fell_asleep_approx_hour = int(self.cleaned_data['fell_asleep_approx_hour'])
+        fell_asleep_approx_minute = int(self.cleaned_data['fell_asleep_approx_minute'])
+        woke_up_at_hour = int(self.cleaned_data['woke_up_at_hour'])
+        woke_up_at_minute = int(self.cleaned_data['woke_up_at_minute'])
+        sleep_quality = self.cleaned_data['sleep_quality']
+        notes = self.cleaned_data['notes']
+
+        # Set the instance values
+        instance.fell_asleep_approx = time(fell_asleep_approx_hour, fell_asleep_approx_minute)
+        instance.woke_up_at = time(woke_up_at_hour, woke_up_at_minute)
+        instance.sleep_quality = sleep_quality
+        instance.notes = notes
 
         if commit:
             instance.save()
         return instance
+
+class RecordNutritionForm(forms.ModelForm):
+    class Meta:
+        model = Nutrition
+        fields = ("food_name", "calories", "meal_type", "notes")

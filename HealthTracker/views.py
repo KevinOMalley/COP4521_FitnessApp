@@ -6,7 +6,8 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from HealthTracker.models import Account, UserHealthInfo, MyAccountManager, Workout, Nutrition, Sleep
-from .forms import RegisterForm, AuthenticationForm, HealthInfoForm, RecordWorkoutForm, RecordFoodForm, RecordSleepForm
+from .forms import RegisterForm, AuthenticationForm, HealthInfoForm, RecordWorkoutForm, RecordSleepForm, \
+    RecordNutritionForm
 
 
 def register_view(request, *args, **kwargs):
@@ -175,47 +176,6 @@ def record_workout(request):
     return render(request, 'HealthTracker/user_page/tracker_pages/record-workout.html', context)
 
 @login_required
-def record_food(request):
-    user = request.user
-    user_instance = Account.objects.get(id=user.id)
-    try:
-        record_food = Nutrition.objects.get(id=user_instance.id)
-    except Nutrition.DoesNotExist:
-        record_food = None
-
-    if request.method == 'POST':
-        form = RecordFoodForm(request.POST, instance=record_food)
-        if form.is_valid():
-            food_data = form.save(commit=False)
-            food_data.id = user_instance.id
-            food_data.save()
-            return redirect('nutrition-tracker')
-    else:
-        form = RecordFoodForm(instance=record_food)
-
-    context = {
-        'record_food': record_food,
-        'form': form,
-    }
-    return render(request, 'HealthTracker/user_page/tracker_pages/record-food.html', context)
-
-# @login_required
-# def record_sleep(request):
-#     user = request.user
-#     user_instance = Account.objects.get(id=user.id)
-#     if request.method == 'POST':
-#         form = RecordSleepForm(request.POST)
-#         if form.is_valid():
-#             sleep = form.save(commit=False)
-#             sleep.user = user_instance
-#             sleep.total_sleep_duration = sleep.get_total_sleep_duration()
-#             sleep.save()
-#             return redirect('sleep-tracker')
-#     else:
-#         form = RecordSleepForm()
-#     return render(request, 'HealthTracker/user_page/tracker_pages/record-sleep.html', {'form': form})
-
-@login_required
 def record_sleep(request):
     user = request.user
     user_instance = Account.objects.get(id=user.id)
@@ -223,7 +183,7 @@ def record_sleep(request):
         form = RecordSleepForm(request.POST)
         if form.is_valid():
             sleep = form.save(commit=False)
-            sleep.user = user_instance  # Associate the Sleep instance with the current user
+            sleep.id = user_instance.id  # Associate the Sleep instance with the current user's id
             # sleep.total_sleep_duration = sleep.get_total_sleep_duration()
             print("Sleep instance created:", sleep)  # Debugging line
             sleep.save()
@@ -234,6 +194,23 @@ def record_sleep(request):
     else:
         form = RecordSleepForm()
     return render(request, 'HealthTracker/user_page/tracker_pages/record-sleep.html', {'form': form})
+
+@login_required
+def record_nutrition(request):
+    user = request.user
+    user_instance = Account.objects.get(id=user.id)
+    if request.method == 'POST':
+        form = RecordNutritionForm(request.POST)
+        if form.is_valid():
+            nutrition = form.save(commit=False)
+            nutrition.id = user_instance.id  # Associate the Nutrition instance with the current user's id
+            nutrition.save()
+            return redirect('nutrition-tracker')
+        else:
+            print("Form is not valid:", form.errors)  # Debugging line
+    else:
+        form = RecordNutritionForm()
+    return render(request, 'HealthTracker/user_page/tracker_pages/record-nutrition.html', {'form': form})
 
 
 @login_required
@@ -247,21 +224,18 @@ def display_workout(request):
     return render(request, 'HealthTracker/user_page/tracker_pages/display-workout.html', context)
 
 @login_required
-def display_food(request):
-    user = request.user
-    account = Account.objects.get(username=user.username)
-    foods = Food.objects.filter(id=account.id)
-    context = {
-        'foods': foods
-    }
-    return render(request, 'HealthTracker/user_page/tracker_pages/display-food.html', context)
-
-@login_required
 def display_sleep(request):
     user = request.user
-    account = Account.objects.get(username=user.username)
-    sleeps = Sleep.objects.filter(id=account.id)
+    user_instance = Account.objects.get(id=user.id)
+    sleeps = Sleep.objects.filter(id=user_instance.id)  # Retrieve sleep records associated with the current user's id
     context = {
         'sleeps': sleeps
     }
     return render(request, 'HealthTracker/user_page/tracker_pages/display-sleep.html', context)
+
+@login_required
+def display_nutrition(request):
+    user = request.user
+    user_instance = Account.objects.get(id=user.id)
+    nutritions = Nutrition.objects.filter(id=user_instance.id)
+    return render(request, 'HealthTracker/user_page/tracker_pages/display-nutrition.html', {'nutritions': nutritions})

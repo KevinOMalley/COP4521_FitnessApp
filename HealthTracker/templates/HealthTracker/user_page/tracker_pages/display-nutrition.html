@@ -1,0 +1,23 @@
+{% extends 'HealthTracker/base.html' %}
+
+{% block content %}
+  <div class="container my-5">
+    <a href="{% url 'nutrition-tracker' %}" class="btn btn-primary mb-4">Back</a>
+    <h1 class="text-center mb-4">Your Nutrition Records</h1>
+
+    <div class="row justify-content-center">
+      {% for nutrition in nutritions %}
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title text-center mb-3">{{ nutrition.food_name }}</h5>
+              <p class="card-text mb-2"><strong>Calories:</strong> {{ nutrition.calories }}</p>
+              <p class="card-text mb-2"><strong>Meal Type:</strong> {{ nutrition.meal_type }}</p>
+              <p class="card-text mb-2"><strong>Notes:</strong> {{ nutrition.notes }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
