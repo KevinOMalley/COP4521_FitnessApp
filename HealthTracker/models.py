@@ -80,6 +80,7 @@ class UserHealthInfo(models.Model):
     goals = models.TextField(null=True)
     
 class Nutrition(models.Model): # TODO: Implement calculations
+    user = models.ForeignKey(Account,on_delete=models.CASCADE)
     food_name = models.CharField(max_length=50)
     calories = models.IntegerField()
     date = models.DateField(auto_now_add=True)
@@ -102,8 +103,8 @@ class Nutrition(models.Model): # TODO: Implement calculations
     def __str__(self):
         return f"{self.food_name} - {self.calories} calories"
       
-    
-class Workout(models.Model): # TODO: Implement calculations
+class WorkoutEntry(models.Model): # TODO: Implement calculations
+    username = models.ForeignKey(Account, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add = True)
     activity_type = models.CharField(max_length=50) #running, swimming, etc.
     duration = models.DurationField(default=timedelta(seconds=0))
@@ -131,6 +132,7 @@ class Workout(models.Model): # TODO: Implement calculations
     
     
 class Sleep(models.Model): # TODO: Implement calculations
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     fell_asleep_approx = models.TimeField()
     woke_up_at = models.TimeField()
