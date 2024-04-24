@@ -78,29 +78,8 @@ class UserHealthInfo(models.Model):
     weight = models.IntegerField()
     height = models.IntegerField()
     goals = models.TextField(null=True)
-
-
-'''
-class Food(models.Model):
-    user = models.ForeignKey(Account, on_delete=models.CASCADE)
-    food_name = models.CharField(max_length=50)
-    calories = models.IntegerField()
-    date = models.DateField(auto_now_add=True)
-    meal_type = models.CharField(max_length=20, choices=[
-        ('breakfast', 'Breakfast'),
-        ('brunch', 'Brunch'),
-        ('lunch', 'Lunch'),
-        ('dinner', 'Dinner'),
-        ('snack', 'Snack')
-    ])
     
-    notes = models.TextField(blank=True)
-
-    def __str__(self):
-        return f"{self.food_name} - {self.calories} calories ({self.user.username})"
-'''  
-    
-class Nutrition(models.Model):
+class Nutrition(models.Model): # TODO: Implement calculations
     food_name = models.CharField(max_length=50)
     calories = models.IntegerField()
     date = models.DateField(auto_now_add=True)
@@ -124,7 +103,7 @@ class Nutrition(models.Model):
         return f"{self.food_name} - {self.calories} calories"
       
     
-class Workout(models.Model):
+class Workout(models.Model): # TODO: Implement calculations
     date = models.DateTimeField(auto_now_add = True)
     activity_type = models.CharField(max_length=50) #running, swimming, etc.
     duration = models.DurationField(default=timedelta(seconds=0))
@@ -151,7 +130,7 @@ class Workout(models.Model):
         return f"{self.activity_type} on {self.date}"
     
     
-class Sleep(models.Model):
+class Sleep(models.Model): # TODO: Implement calculations
     date = models.DateField(auto_now_add=True)
     fell_asleep_approx = models.TimeField()
     woke_up_at = models.TimeField()
@@ -180,7 +159,7 @@ class Sleep(models.Model):
         return f"Slept on {self.date} for {self.total_sleep_duration}"
     
     
-class Goals(models.Model):
+class Goals(models.Model): #TODO: Finish or delete
     # Weight Goal
     # Step Goal
     # Calorie Goal
