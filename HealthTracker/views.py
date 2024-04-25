@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseForbidden
@@ -8,6 +10,10 @@ from django.contrib.auth.models import User
 from HealthTracker.models import Account, UserHealthInfo, MyAccountManager, WorkoutEntry, Nutrition, Sleep
 from .forms import RegisterForm, AuthenticationForm, HealthInfoForm, RecordWorkoutForm, RecordSleepForm, \
     RecordNutritionForm
+from HealthTracker.calculate import (distance_ran_to_calories, distance_walked_to_calories,
+                                     distance_biked_to_calories, distance_swam_to_calories,
+                                     pushup_to_calories, pullup_to_calories, situp_to_calories,
+                                     squat_to_calories, jumpingjack_to_calories, shrug_to_calories)
 
 
 def register_view(request, *args, **kwargs):
@@ -150,11 +156,36 @@ def health_info(request):
     return render(request, 'HealthTracker/user_page/tracker_pages/health_info.html', context)
 
 
+# @login_required
+# def record_workout(request):
+#     user = request.user
+#     try:
+#         user_instance = Account.objects.get(id=user.id)
+#     except Account.DoesNotExist:
+#         # Handle the case where the user doesn't exist
+#         return HttpResponse("User not found")
+#
+#     if request.method == 'POST':
+#         form = RecordWorkoutForm(request.POST)
+#         if form.is_valid():
+#             workout_data = form.save(commit=False)
+#             workout_data.username = user_instance  # Associate the workout with the user
+#             workout_data.save()
+#             return redirect('workout-tracker')
+#     else:
+#         form = RecordWorkoutForm()
+#
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, 'HealthTracker/user_page/tracker_pages/record-workout.html', context)
+
 @login_required
 def record_workout(request):
     user = request.user
     try:
         user_instance = Account.objects.get(id=user.id)
+        user_health = UserHealthInfo.objects.get(username=user_instance)
     except Account.DoesNotExist:
         # Handle the case where the user doesn't exist
         return HttpResponse("User not found")
@@ -162,9 +193,33 @@ def record_workout(request):
     if request.method == 'POST':
         form = RecordWorkoutForm(request.POST)
         if form.is_valid():
-            workout_data = form.save(commit=False)
-            workout_data.username = user_instance  # Associate the workout with the user
-            workout_data.save()
+            workout_entry = form.save(commit=False)
+            workout_entry.username = user_instance  # Associate the workout with the user
+
+            weight_float = float(user_health.weight)
+
+            if workout_entry.activity_type == 'Run':
+                workout_entry.calories_burned = distance_ran_to_calories(float(workout_entry.kilometers), weight_float)
+            elif workout_entry.activity_type == 'Walk':
+                workout_entry.calories_burned = distance_walked_to_calories(float(workout_entry.kilometers), weight_float)
+            elif workout_entry.activity_type == 'Bike':
+                workout_entry.calories_burned = distance_biked_to_calories(float(workout_entry.kilometers), weight_float)
+            elif workout_entry.activity_type == 'Swim':
+                workout_entry.calories_burned = distance_swam_to_calories(float(workout_entry.kilometers), weight_float)
+            elif workout_entry.activity_type == 'Pushup':
+                workout_entry.calories_burned = pushup_to_calories(float(workout_entry.reps), weight_float)
+            elif workout_entry.activity_type == 'Pullup':
+                workout_entry.calories_burned = pullup_to_calories(float(workout_entry.reps), weight_float)
+            elif workout_entry.activity_type == 'Situp':
+                workout_entry.calories_burned = situp_to_calories(float(workout_entry.reps), weight_float)
+            elif workout_entry.activity_type == 'Squat':
+                workout_entry.calories_burned = squat_to_calories(float(workout_entry.reps), weight_float)
+            elif workout_entry.activity_type == 'Jumping Jack':
+                workout_entry.calories_burned = jumpingjack_to_calories(float(workout_entry.reps), weight_float)
+            elif workout_entry.activity_type == 'Shrug':
+                workout_entry.calories_burned = shrug_to_calories(float(workout_entry.reps), weight_float)
+
+            workout_entry.save()
             return redirect('workout-tracker')
     else:
         form = RecordWorkoutForm()
