@@ -2,7 +2,7 @@
 
 This project is a health tracking application written with Python, HTML and CSS. The project utilizes Django as its web framework.
 
-## Group Members
+## Group Members (Group 29)
 - **Ryan Baker**
 - **Kevin O'Malley**
 - **Benjamin Raidman**
