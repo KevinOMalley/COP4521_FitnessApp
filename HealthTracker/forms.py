@@ -42,7 +42,6 @@ ACTIVITY_CHOICES = (
 
 class RecordWorkoutForm(forms.ModelForm):
     activity_type = forms.ChoiceField(choices=ACTIVITY_CHOICES)
-    weight = forms.DecimalField(disabled=True)  # Add a disabled weight field
 
     class Meta:
         model = WorkoutEntry
