@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Account, UserHealthInfo, WorkoutEntry, Nutrition, Sleep
-from datetime import time, datetime, timedelta
+from datetime import time, timedelta
 from . import calculate
 
 class LoginForm(forms.Form):
@@ -43,9 +43,64 @@ ACTIVITY_CHOICES = (
 
 class RecordWorkoutForm(forms.ModelForm):
     activity_type = forms.ChoiceField(choices=ACTIVITY_CHOICES)
+    weight = forms.DecimalField(disabled=True)  # Add a disabled weight field
+
     class Meta:
         model = WorkoutEntry
         fields = ("activity_type", "duration", "kilometers", "miles", "rest_periods", "sets", "reps", "notes", "rating")
+
+    def init(self, user, args, **kwargs):
+        super().init(args, **kwargs)
+        user_health = UserHealthInfo.objects.get(user=user)  # Retrieve user's health info
+        self.fields['weight'].initial = user_health.weight  # Set the initial value for the weight field
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        mile = self.cleaned_data['miles']
+        kilometer = self.cleaned_data['kilometers']
+        weight = self.cleaned_data['weight_kg']
+        sets = self.cleaned_data['sets']
+        reps = self.cleaned_data['reps']
+
+        if self.cleaned_data['activity_type'] == 'Walk' and self.cleaned_data['miles'] != None:
+            kms = calculate.miles_to_km(mile)
+            cals_burned = calculate.distance_walked_to_calories(kms, weight)
+        if self.cleaned_data['activity_type'] == 'Run' and self.cleaned_data['miles'] != None:
+            kms = calculate.miles_to_km(mile)
+            cals_burned = calculate.distance_ran_to_calories(kms, weight)
+        if self.cleaned_data['activity_type'] == 'Swam' and self.cleaned_data['miles'] != None:
+            kms = calculate.miles_to_km(mile)
+            cals_burned = calculate.distance_swam_to_calories(kms, weight)
+        if self.cleaned_data['activity_type'] == 'Biked' and self.cleaned_data['miles'] != None:
+            kms = calculate.miles_to_km(mile)
+            cals_burned = calculate.distance_biked_to_calories(kms, weight)
+        if self.cleaned_data['activity_type'] == 'Walk' and self.cleaned_data['kilometers'] != None:
+            cals_burned = calculate.distance_walked_to_calories(kilometer, weight)
+        if self.cleaned_data['activity_type'] == 'Run' and self.cleaned_data['kilometers'] != None:
+            cals_burned = calculate.distance_ran_to_calories(kilometer, weight)
+        if self.cleaned_data['activity_type'] == 'Swam' and self.cleaned_data['kilometers'] != None:
+            cals_burned = calculate.distance_swam_to_calories(kilometer, weight)
+        if self.cleaned_data['activity_type'] == 'Biked' and self.cleaned_data['kilometers'] != None:
+            cals_burned = calculate.distance_biked_to_calories(kilometer, weight)
+
+        if self.cleaned_data['activity_type'] == 'Pushup':
+            cals_burned = calculate.pushup_to_calories(reps, sets, weight)
+        if self.cleaned_data['activity_type'] == 'Pullup':
+            cals_burned = calculate.pullup_to_calories(reps, sets, weight)
+        if self.cleaned_data['activity_type'] == 'Situp':
+            cals_burned = calculate.situp_to_calories(reps, sets, weight)
+        if self.cleaned_data['activity_type'] == 'Squat':
+            cals_burned = calculate.squat_to_calories(reps, sets, weight)
+        if self.cleaned_data['activity_type'] == 'Jumping Jack':
+            cals_burned = calculate.jumpingjack_to_calories(reps, sets, weight)
+        if self.cleaned_data['activity_type'] == 'Shrug':
+            cals_burned = calculate.shrug_to_calories(reps, sets, weight)
+
+
+        instance.calories_burned = int(cals_burned)
+        if commit:
+            instance.save()
+        return instance
 
 class RecordSleepForm(forms.ModelForm):
     HOURS = [(str(i), '{:02d}'.format(i)) for i in range(24)]
