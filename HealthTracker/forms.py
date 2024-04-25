@@ -45,7 +45,7 @@ class RecordWorkoutForm(forms.ModelForm):
 
     class Meta:
         model = WorkoutEntry
-        fields = ("activity_type", "duration", "kilometers", "miles", "rest_periods", "sets", "reps", "notes", "rating")
+        fields = ("activity_type", "duration", "kilometers", "rest_periods", "sets", "reps", "notes", "rating")
 
 class RecordSleepForm(forms.ModelForm):
     HOURS = [(str(i), '{:02d}'.format(i)) for i in range(24)]
