@@ -207,17 +207,17 @@ def record_workout(request):
             elif workout_entry.activity_type == 'Swim':
                 workout_entry.calories_burned = distance_swam_to_calories(float(workout_entry.kilometers), weight_float)
             elif workout_entry.activity_type == 'Pushup':
-                workout_entry.calories_burned = pushup_to_calories(float(workout_entry.reps), weight_float)
+                workout_entry.calories_burned = pushup_to_calories(float(workout_entry.reps), float(workout_entry.sets), weight_float)
             elif workout_entry.activity_type == 'Pullup':
-                workout_entry.calories_burned = pullup_to_calories(float(workout_entry.reps), weight_float)
+                workout_entry.calories_burned = pullup_to_calories(float(workout_entry.reps), float(workout_entry.sets), weight_float)
             elif workout_entry.activity_type == 'Situp':
-                workout_entry.calories_burned = situp_to_calories(float(workout_entry.reps), weight_float)
+                workout_entry.calories_burned = situp_to_calories(float(workout_entry.reps), float(workout_entry.sets), weight_float)
             elif workout_entry.activity_type == 'Squat':
-                workout_entry.calories_burned = squat_to_calories(float(workout_entry.reps), weight_float)
+                workout_entry.calories_burned = squat_to_calories(float(workout_entry.reps), float(workout_entry.sets), weight_float)
             elif workout_entry.activity_type == 'Jumping Jack':
-                workout_entry.calories_burned = jumpingjack_to_calories(float(workout_entry.reps), weight_float)
+                workout_entry.calories_burned = jumpingjack_to_calories(float(workout_entry.reps), float(workout_entry.sets), weight_float)
             elif workout_entry.activity_type == 'Shrug':
-                workout_entry.calories_burned = shrug_to_calories(float(workout_entry.reps), weight_float)
+                workout_entry.calories_burned = shrug_to_calories(float(workout_entry.reps), float(workout_entry.sets), weight_float)
 
             workout_entry.save()
             return redirect('workout-tracker')
