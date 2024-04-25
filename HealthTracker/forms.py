@@ -27,7 +27,23 @@ class HealthInfoForm(forms.ModelForm):
         model = UserHealthInfo
         fields = ('weight', 'height', 'goals')
 
+ACTIVITY_CHOICES = (
+    ('Walk', 'Walk'),
+    ('Run', 'Run'),
+    ('Bike', 'Bike'),
+    ('Swim', 'Swim'),
+    ('Pushup', 'Pushup'),
+    ('Pullup', 'Pullup'),
+    ('Situp', 'Situp'),
+    ('Squat', 'Squat'),
+    ('Jumping Jack', 'Jumping Jack'),
+    ('Shrug', 'Shrug'),
+)
+
 class RecordWorkoutForm(forms.ModelForm):
+    activity_type = forms.ChoiceField(choices=ACTIVITY_CHOICES)
+    weight = forms.DecimalField(disabled=True)  # Add a disabled weight field
+
     class Meta:
         model = WorkoutEntry
         fields = ("activity_type", "duration", "kilometers", "miles", "rest_periods", "sets", "reps", "notes", "rating")
