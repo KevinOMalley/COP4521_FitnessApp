@@ -32,3 +32,5 @@ http://127.0.0.1:8000/
 ### Registering an Account
 Make sure that you have a somewhat complex password that contains numbers and letters.
 Also make sure you have a unique username and password.
+
+<img width="1728" alt="HealthTracker" src="https://github.com/KevinOMalley/COP4521_FitnessApp/assets/137850850/647f56bd-fe5a-40ec-b959-c6524b294990">
